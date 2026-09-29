@@ -19,4 +19,4 @@
 
 | Начат | Папка | Статус | Итог |
 |---|---|---|---|
-| 2026-09-29 | `2026-09-29-github-pages-publish--wip` | в работе | — |
+| 2026-09-29 | `2026-09-29-github-pages-publish` | сдан | Портфолио опубликовано на бесплатном GitHub Pages: https://atrshncv-design.github.io/atrshncv-portfolio/ |

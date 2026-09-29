@@ -4,7 +4,7 @@
 **Blocked by:** нет  
 **Зона:** `.github/workflows/`, `README.md`  
 **Волна:** 1  
-**Status:** ready
+**Status:** done
 
 ## Что должно заработать
 
@@ -22,9 +22,9 @@ GitHub Actions собирает сайт из этого репозитория 
 
 ## Критерии приёмки
 
-- [ ] Workflow запускается при push в `main` и вручную из GitHub Actions.
-- [ ] Workflow использует `package-lock.json`, запускает production-сборку и передаёт только каталог `out/` в GitHub Pages.
-- [ ] Workflow использует официальные Pages Actions и необходимые минимальные permissions для публикации; API-ключи и платные сервисы не нужны.
-- [ ] README описывает бесплатный адрес `https://atrshncv-design.github.io/atrshncv-portfolio/`, выбор GitHub Actions как источника Pages и локальные команды статической сборки.
-- [ ] README больше не предписывает запускать сайт в production через Bun, standalone-сервер или Caddy.
-- [ ] Не добавлены и не запущены автоматизированные тесты.
+- [x] Workflow запускается при push в `main` и вручную из GitHub Actions.
+- [x] Workflow использует `package-lock.json`, запускает production-сборку и передаёт только каталог `out/` в GitHub Pages.
+- [x] Workflow использует официальные Pages Actions и необходимые минимальные permissions для публикации; API-ключи и платные сервисы не нужны.
+- [x] README описывает бесплатный адрес `https://atrshncv-design.github.io/atrshncv-portfolio/`, выбор GitHub Actions как источника Pages и локальные команды статической сборки.
+- [x] README больше не предписывает запускать сайт в production через Bun, standalone-сервер или Caddy.
+- [x] Не добавлены и не запущены автоматизированные тесты.
