@@ -19,6 +19,7 @@ import {
   Database,
   Search
 } from "lucide-react";
+import { publicAssetPath } from "@/lib/public-path";
 
 // Featured AI Cases - главные кейсы
 const featuredProjects = [
@@ -183,7 +184,7 @@ export function Projects() {
               <div className="relative overflow-hidden">
                 <div className="aspect-video bg-muted">
                   <img
-                    src={project.image}
+                    src={publicAssetPath(project.image)}
                     alt={project.title}
                     className="w-full h-full object-cover"
                   />
@@ -329,7 +330,7 @@ export function Projects() {
               >
                 <div className="aspect-video bg-muted overflow-hidden">
                   <img
-                    src={project.image}
+                    src={publicAssetPath(project.image)}
                     alt={project.title}
                     className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                   />

@@ -1,243 +1,89 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
-import { MessageSquare, X, Send, User, Loader2 } from "lucide-react";
-import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { Mail, MessageSquare, Send, X } from "lucide-react";
+import { publicAssetPath } from "@/lib/public-path";
 
-interface Message {
-  role: "user" | "assistant";
-  content: string;
-}
-
-const suggestedQuestions = [
-  "Какие проекты ты делал?",
-  "Какой у тебя стек?",
-  "Сколько стоит автоматизация?",
-  "Как с тобой связаться?",
-];
-
-const welcomeMessage = `Вижу вас как наяву! 😇
-
-Меня зовут Куруш, я знаю всё об Александре Трищенкове, ведь моя память совершенна!
-Ты можешь задать любой вопрос об опыте Александра, его навыках, компетенциях и проектах, а я помогу понять, подходит ли он для решения вашей задачи.
-
-Что хотите узнать?`;
+const telegramUrl = "https://t.me/a_trshncv";
+const emailUrl = "mailto:alexander.trishencov@gmail.com";
 
 export function AIChat() {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      role: "assistant",
-      content: welcomeMessage,
-    },
-  ]);
-  const [input, setInput] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
-  const sendMessage = async (text?: string) => {
-    const messageText = text || input.trim();
-    if (!messageText || isLoading) return;
-
-    const userMessage: Message = { role: "user", content: messageText };
-    setMessages((prev) => [...prev, userMessage]);
-    setInput("");
-    setIsLoading(true);
-
-    try {
-      const response = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          message: messageText,
-          history: messages.slice(-6).map(m => ({ role: m.role, content: m.content })),
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      
-      if (data.response) {
-        const assistantMessage: Message = { role: "assistant", content: data.response };
-        setMessages((prev) => [...prev, assistantMessage]);
-      } else {
-        throw new Error("No response in data");
-      }
-    } catch (error) {
-      console.error("Chat error:", error);
-      const errorMessage: Message = {
-        role: "assistant",
-        content: "Произошла ошибка соединения. Попробуйте ещё раз или напишите в Telegram: @a_trshncv",
-      };
-      setMessages((prev) => [...prev, errorMessage]);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      sendMessage();
-    }
-  };
 
   return (
-    <div className="chat-widget">
-      {/* Chat Window */}
+    <div className="fixed bottom-5 right-5 z-50 flex flex-col items-end gap-3 sm:bottom-7 sm:right-7">
       {isOpen && (
-        <div className="chat-window animate-in fade-in-0 slide-in-from-bottom-4 duration-300">
-          {/* Header */}
-          <div className="flex items-center justify-between p-4 border-b border-border/50 bg-card">
+        <section
+          aria-label="Связаться с Александром"
+          className="w-[min(22rem,calc(100vw-2.5rem))] overflow-hidden rounded-2xl border border-border bg-card shadow-2xl"
+        >
+          <header className="flex items-center justify-between border-b border-border/60 bg-card p-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full overflow-hidden bg-primary/10 flex items-center justify-center">
-                <img 
-                  src="/bot-avatar.png" 
-                  alt="Куруш" 
-                  className="w-full h-full object-cover"
-                />
-              </div>
+              <img
+                src={publicAssetPath("/bot-avatar.png")}
+                alt="Куруш"
+                className="h-10 w-10 rounded-full object-cover"
+              />
               <div>
                 <div className="font-semibold text-sm">Куруш</div>
-                <div className="text-xs text-muted-foreground">Буревух Куруш — великий и всезнающий!</div>
+                <div className="text-xs text-muted-foreground">Помощник по связи</div>
               </div>
             </div>
-            <Button variant="ghost" size="icon" onClick={() => setIsOpen(false)} className="h-8 w-8">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setIsOpen(false)}
+              aria-label="Закрыть панель связи"
+              className="h-8 w-8"
+            >
               <X className="h-4 w-4" />
             </Button>
-          </div>
+          </header>
 
-          {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4">
-            {messages.map((message, index) => (
-              <div
-                key={index}
-                className={`flex gap-3 ${message.role === "user" ? "flex-row-reverse" : ""}`}
-              >
-                <div
-                  className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden ${
-                    message.role === "user" ? "bg-primary/10" : "bg-muted"
-                  }`}
-                >
-                  {message.role === "user" ? (
-                    <User className="h-4 w-4 text-primary" />
-                  ) : (
-                    <img 
-                      src="/bot-avatar.png" 
-                      alt="Куруш" 
-                      className="w-full h-full object-cover"
-                    />
-                  )}
-                </div>
-                <div
-                  className={`rounded-2xl px-4 py-2 max-w-[80%] ${
-                    message.role === "user"
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-muted"
-                  }`}
-                >
-                  <p className="text-sm whitespace-pre-wrap">{message.content}</p>
-                </div>
-              </div>
-            ))}
-
-            {/* Typing indicator */}
-            {isLoading && (
-              <div className="flex gap-3">
-                <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center overflow-hidden">
-                  <img 
-                    src="/bot-avatar.png" 
-                    alt="Куруш" 
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="rounded-2xl px-4 py-3 bg-muted">
-                  <div className="typing-indicator">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            <div ref={messagesEndRef} />
-          </div>
-
-          {/* Suggested Questions (only at start) */}
-          {messages.length === 1 && (
-            <div className="px-4 pb-2">
-              <div className="text-xs text-muted-foreground mb-2">Частые вопросы:</div>
-              <div className="flex flex-wrap gap-2">
-                {suggestedQuestions.map((question) => (
-                  <button
-                    key={question}
-                    onClick={() => sendMessage(question)}
-                    className="text-xs px-3 py-1.5 rounded-full bg-muted hover:bg-muted/80 transition-colors"
-                  >
-                    {question}
-                  </button>
-                ))}
-              </div>
+          <div className="space-y-4 p-4">
+            <div className="rounded-2xl bg-muted p-4">
+              <p className="text-sm leading-relaxed">
+                Расскажите о задаче — Александр ответит лично. Выберите удобный способ связи.
+              </p>
             </div>
-          )}
-
-          {/* Input */}
-          <div className="p-4 border-t border-border/50 bg-card">
-            <div className="flex gap-2">
-              <Input
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyPress={handleKeyPress}
-                placeholder="Спросите о навыках, проектах..."
-                className="flex-1"
-                disabled={isLoading}
-              />
-              <Button
-                onClick={() => sendMessage()}
-                disabled={!input.trim() || isLoading}
-                size="icon"
-                className="bg-primary hover:bg-primary/90"
-              >
-                <Send className="h-4 w-4" />
-              </Button>
-            </div>
+            <Button asChild className="w-full justify-start">
+              <a href={telegramUrl} target="_blank" rel="noopener noreferrer">
+                <Send className="mr-3 h-4 w-4" />
+                Написать в Telegram
+                <Badge variant="secondary" className="ml-auto text-xs">Быстрее</Badge>
+              </a>
+            </Button>
+            <Button asChild variant="outline" className="w-full justify-start">
+              <a href={emailUrl}>
+                <Mail className="mr-3 h-4 w-4" />
+                Написать на email
+              </a>
+            </Button>
           </div>
-        </div>
+        </section>
       )}
 
-      {/* Chat Bubble */}
       <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="chat-bubble overflow-hidden"
-        aria-label="Открыть чат с Курушем"
+        type="button"
+        onClick={() => setIsOpen((open) => !open)}
+        aria-label={isOpen ? "Закрыть панель связи" : "Открыть панель связи"}
+        aria-expanded={isOpen}
+        className="relative flex h-14 w-14 items-center justify-center overflow-hidden rounded-full border border-primary/30 bg-card shadow-lg transition-transform hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
       >
         {isOpen ? (
           <X className="h-6 w-6 text-primary" />
         ) : (
           <>
-            <img 
-              src="/bot-avatar.png" 
-              alt="Куруш" 
-              className="w-[50px] h-[50px] object-cover rounded-full p-1"
+            <img
+              src={publicAssetPath("/bot-avatar.png")}
+              alt=""
+              className="h-full w-full rounded-full object-cover p-1"
             />
-            <Badge className="absolute -top-1 -right-1 px-1.5 py-0.5 text-[10px] bg-primary text-primary-foreground animate-pulse">
-              AI
-            </Badge>
+            <span className="absolute -right-0.5 -top-0.5 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-primary-foreground">
+              <MessageSquare className="h-3 w-3" />
+            </span>
           </>
         )}
       </button>

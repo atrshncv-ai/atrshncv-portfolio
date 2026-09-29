@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
+import { publicAssetPath } from "@/lib/public-path";
+
+const siteUrl = "https://atrshncv-design.github.io/atrshncv-portfolio/";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,7 +41,7 @@ export const metadata: Metadata = {
     "Александр Трищенков",
     "Trishencov",
   ],
-  authors: [{ name: "Александр Трищенков", url: "https://trishencov.space" }],
+  authors: [{ name: "Александр Трищенков", url: siteUrl }],
   creator: "Александр Трищенков",
   publisher: "Александр Трищенков",
   robots: {
@@ -53,13 +56,13 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: "/logo.svg",
+    icon: publicAssetPath("/logo.svg"),
   },
   openGraph: {
     title: "Александр Трищенков | AI Automation Specialist — n8n, Make, RAG",
     description:
       "AI Automation Specialist. Автоматизация бизнес-процессов с помощью LLM, n8n, Make. RAG-системы, AI-агенты, интеграции. 1000+ часов сэкономлено для бизнеса.",
-    url: "https://trishencov.space",
+    url: siteUrl,
     siteName: "Александр Трищенков — AI Automation",
     type: "profile",
     locale: "ru_RU",
@@ -75,7 +78,7 @@ export const metadata: Metadata = {
     creator: "@a_trshncv",
   },
   alternates: {
-    canonical: "https://trishencov.space",
+    canonical: siteUrl,
   },
 };
 
@@ -89,7 +92,7 @@ const jsonLd = {
   jobTitle: "AI Automation Specialist",
   description:
     "AI Automation Specialist с 3+ годами опыта. Специализируюсь на LLM интеграциях, RAG-системах и автоматизации бизнес-процессов с помощью n8n, Make, Zapier.",
-  url: "https://trishencov.space",
+  url: siteUrl,
   email: "alexander.trishencov@gmail.com",
   telephone: "+7-912-468-76-70",
   address: {
@@ -140,7 +143,7 @@ const jsonLdService = {
   provider: {
     "@type": "Person",
     name: "Александр Трищенков",
-    url: "https://trishencov.space",
+    url: siteUrl,
   },
   areaServed: "Worldwide",
   serviceType: ["AI Automation", "LLM Integration", "Process Automation", "Bot Development"],
@@ -159,7 +162,6 @@ export default function RootLayout({
   return (
     <html lang="ru" suppressHydrationWarning className="dark">
       <head>
-        <link rel="canonical" href="https://trishencov.space" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

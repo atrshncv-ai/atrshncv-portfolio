@@ -7,3 +7,4 @@ export { Projects } from "./Projects";
 export { Experience } from "./Experience";
 export { Contact } from "./Contact";
 export { Footer } from "./Footer";
+export { AIChat } from "./AIChat";

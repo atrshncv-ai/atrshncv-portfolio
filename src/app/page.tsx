@@ -8,6 +8,7 @@ import {
   Experience,
   Contact,
   Footer,
+  AIChat,
 } from "@/components/portfolio";
 
 export default function Home() {
@@ -22,6 +23,7 @@ export default function Home() {
       <Experience />
       <Contact />
       <Footer />
+      <AIChat />
     </main>
   );
 }

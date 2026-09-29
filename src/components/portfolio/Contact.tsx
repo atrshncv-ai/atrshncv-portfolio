@@ -17,8 +17,6 @@ import {
   Briefcase,
   Rocket,
   HelpCircle,
-  CheckCircle2,
-  Loader2,
   Clock,
   Globe,
   Zap
@@ -63,46 +61,25 @@ const requestTypes = [
 ];
 
 export function Contact() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
   const [selectedType, setSelectedType] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    setError(null);
 
     const formData = new FormData(e.currentTarget);
-    const data = {
-      name: formData.get("name") as string,
-      email: formData.get("email") as string,
-      company: formData.get("company") as string,
-      type: selectedType || "consultation",
-      message: formData.get("message") as string,
-    };
+    const requestType = requestTypes.find((type) => type.value === selectedType);
+    const subject = `Запрос с портфолио: ${requestType?.label || "Вопрос"}`;
+    const body = [
+      `Имя: ${formData.get("name") || ""}`,
+      `Email для ответа: ${formData.get("email") || ""}`,
+      `Компания / сайт: ${formData.get("company") || "не указаны"}`,
+      `Тип запроса: ${requestType?.label || "Вопрос"}`,
+      "",
+      "Описание задачи:",
+      String(formData.get("message") || ""),
+    ].join("\n");
 
-    try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
-      const result = await response.json();
-
-      if (!response.ok || !result.success) {
-        throw new Error(result.error || "Ошибка отправки");
-      }
-
-      setIsSubmitted(true);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Ошибка отправки. Попробуйте позже.");
-    } finally {
-      setIsSubmitting(false);
-    }
+    window.location.href = `mailto:alexander.trishencov@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   };
 
   return (
@@ -131,17 +108,6 @@ export function Contact() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              {isSubmitted ? (
-                <div className="text-center py-8">
-                  <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                    <CheckCircle2 className="h-8 w-8 text-primary" />
-                  </div>
-                  <h3 className="font-semibold text-lg mb-2">Сообщение отправлено!</h3>
-                  <p className="text-muted-foreground text-sm">
-                    Отвечу в течение 24 часов. Если срочно — напишите в Telegram.
-                  </p>
-                </div>
-              ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
                   {/* Name */}
                   <div className="space-y-2">
@@ -201,33 +167,18 @@ export function Contact() {
                     />
                   </div>
 
-                  {/* Error message */}
-                  {error && (
-                    <div className="p-3 rounded-lg bg-destructive/10 border border-destructive/20 text-destructive text-sm">
-                      {error}
-                    </div>
-                  )}
-
                   {/* Submit */}
                   <Button
                     type="submit"
                     className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
-                    disabled={isSubmitting}
                   >
-                    {isSubmitting ? (
-                      <>
-                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                        Отправка...
-                      </>
-                    ) : (
-                      <>
-                        <Send className="h-4 w-4 mr-2" />
-                        Отправить запрос
-                      </>
-                    )}
+                    <Mail className="h-4 w-4 mr-2" />
+                    Открыть черновик письма
                   </Button>
+                  <p className="text-xs leading-relaxed text-muted-foreground" role="note">
+                    Откроется почтовое приложение с заполненным письмом. Чтобы отправить запрос, нажмите «Отправить» в своём приложении. Данные не передаются этому сайту.
+                  </p>
                 </form>
-              )}
             </CardContent>
           </Card>
 

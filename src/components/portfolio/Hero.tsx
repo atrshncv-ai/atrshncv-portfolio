@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowDown, Github, Calendar, Zap, Clock, TrendingUp } from "lucide-react";
+import { publicAssetPath } from "@/lib/public-path";
 
 const stats = [
   {
@@ -147,7 +148,7 @@ export function Hero() {
               {/* Photo container */}
               <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-primary/20 shadow-2xl">
                 <img
-                  src="/photo.jpg"
+                  src={publicAssetPath("/photo.jpg")}
                   alt="Александр Трищенков — AI Automation Specialist"
                   className="w-full h-full object-cover object-top"
                 />
