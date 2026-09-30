@@ -370,11 +370,11 @@ export function Projects() {
           <div className="grid gap-6 md:grid-cols-2">
             {otherProjects.map((project) => (
               <Card key={project.title} className="group overflow-hidden border-border/50 bg-card/50 transition-shadow hover:shadow-lg">
-                <div className="aspect-video overflow-hidden bg-muted">
+                <div className={`aspect-video overflow-hidden ${project.image === "/projects/vk-video.png" ? "bg-black" : "bg-muted"}`}>
                   <img
                     src={publicAssetPath(project.image)}
                     alt={project.title}
-                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    className={`h-full w-full ${project.image === "/projects/vk-video.png" ? "object-contain" : "object-cover transition-transform duration-300 group-hover:scale-105"}`}
                   />
                 </div>
                 <CardContent className="pt-4">
