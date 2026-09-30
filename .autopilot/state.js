@@ -11,8 +11,8 @@ window.STATE =
   "memoryFile": "AGENTS.md",
   "skillDir": "/Users/aleksandrtrisenkov/.agents/skills/autopilot",
   "startedAt": "2026-09-30T08:42:30+04:00",
-  "updatedAt": "2026-09-30T10:42:04+04:00",
-  "finishedAt": null,
+  "updatedAt": "2026-09-30T10:45:46+04:00",
+  "finishedAt": "2026-09-30T10:45:46+04:00",
   "stages": [
     {
       "id": "preflight",
@@ -61,15 +61,16 @@ window.STATE =
     },
     {
       "id": "final",
-      "status": "active",
-      "startedAt": "2026-09-30T10:42:04+04:00"
+      "status": "done",
+      "startedAt": "2026-09-30T10:42:04+04:00",
+      "finishedAt": "2026-09-30T10:45:46+04:00"
     }
   ],
   "requirements": {
     "total": 17,
-    "done": 16,
+    "done": 17,
     "inTicket": 0,
-    "inSpec": 1,
+    "inSpec": 0,
     "placeholder": 0,
     "deferred": 0,
     "dropped": 0
@@ -98,7 +99,7 @@ window.STATE =
       "failed": 0,
       "note": "Автотестов нет; по AGENTS.md не запускались. Сборка и TypeScript прошли."
     },
-    "commit": null
+    "commit": "c989bbb"
   },
   "tests": null,
   "debt": {
