@@ -5,11 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Menu, X, Mail, Moon, Sun } from "lucide-react";
 
 const navItems = [
-  { label: "Обо мне", href: "#about" },
-  { label: "Процесс", href: "#process" },
-  { label: "Навыки", href: "#skills" },
   { label: "Кейсы", href: "#projects" },
+  { label: "Как внедряю", href: "#process" },
+  { label: "Подход", href: "#about" },
   { label: "Опыт", href: "#experience" },
+  { label: "Стек", href: "#skills" },
   { label: "Контакты", href: "#contact" },
 ];
 
@@ -86,7 +86,7 @@ export function Navigation() {
             >
               <a href="#contact">
                 <Mail className="h-4 w-4 mr-2" />
-                Связаться
+                Обсудить проект
               </a>
             </Button>
             <Button
@@ -128,7 +128,7 @@ export function Navigation() {
                 >
                   <a href="#contact">
                     <Mail className="h-4 w-4 mr-2" />
-                    Связаться
+                    Обсудить проект
                   </a>
                 </Button>
               </div>

@@ -16,10 +16,10 @@ export default function Home() {
     <main className="min-h-screen flex flex-col">
       <Navigation />
       <Hero />
+      <Projects />
       <About />
       <Process />
       <Skills />
-      <Projects />
       <Experience />
       <Contact />
       <Footer />

@@ -1,162 +1,127 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { 
-  Search, 
-  Lightbulb, 
-  Rocket, 
-  Settings, 
-  TrendingUp,
-  ArrowRight,
-  CheckCircle2
-} from "lucide-react";
+import { ArrowRight, CheckCircle2, Lightbulb, Rocket, Search, Settings } from "lucide-react";
 
 const processSteps = [
   {
-    step: 1,
-    title: "Диагностика процессов",
-    description: "Анализирую текущие бизнес-процессы, выявляю узкие места и точки для автоматизации. Оцениваю ROI и приоритизирую задачи.",
+    step: "01",
+    title: "Разбираю процесс",
+    description:
+      "Прохожу путь обращения вместе с командой: каналы, типовые вопросы, правила квалификации и места, где нужен человек.",
+    output: "Карта процесса и границы автоматизации",
     icon: Search,
-    tools: ["Discovery Call", "Process Mapping", "ROI Analysis"],
-    deliverable: "Отчёт с рекомендациями и оценкой экономии",
     color: "text-blue-500",
-    bgColor: "bg-blue-500/10",
+    background: "bg-blue-500/10",
   },
   {
-    step: 2,
-    title: "Проектирование архитектуры",
-    description: "Разрабатываю схему автоматизации: какие сервисы подключить, как будут взаимодействовать компоненты, как обрабатывать ошибки.",
+    step: "02",
+    title: "Проектирую решение",
+    description:
+      "Определяю, где нужны AI, бизнес-правила и интеграции; продумываю данные, исключения и передачу нестандартного запроса сотруднику.",
+    output: "Сценарий работы и план интеграций",
     icon: Lightbulb,
-    tools: ["n8n/Make", "LLM Selection", "API Design"],
-    deliverable: "Архитектурная схема и техническое задание",
     color: "text-purple-500",
-    bgColor: "bg-purple-500/10",
+    background: "bg-purple-500/10",
   },
   {
-    step: 3,
-    title: "MVP и тестирование",
-    description: "Создаю работающий прототип за 1-3 дня. Тестирую на реальных данных, собираю обратную связь, вношу корректировки.",
+    step: "03",
+    title: "Собираю и подключаю",
+    description:
+      "Реализую основной пользовательский путь и связываю его с текущими каналами и сервисами компании.",
+    output: "Рабочий сценарий, проверенный на согласованных примерах",
     icon: Rocket,
-    tools: ["Rapid Prototyping", "Testing", "Iteration"],
-    deliverable: "Работающий MVP автоматизации",
     color: "text-primary",
-    bgColor: "bg-primary/10",
+    background: "bg-primary/10",
   },
   {
-    step: 4,
-    title: "Production и надёжность",
-    description: "Настраиваю мониторинг, обработку ошибок, логирование. Делаю систему устойчивой к сбоям внешних сервисов.",
+    step: "04",
+    title: "Запускаю в production",
+    description:
+      "Проверяю обработку ошибок, фиксирую правила эксплуатации и передаю команде документацию по решению.",
+    output: "Запущенная система и понятная передача команде",
     icon: Settings,
-    tools: ["Error Handling", "Monitoring", "Logging"],
-    deliverable: "Стабильная production-система",
-    color: "text-orange-500",
-    bgColor: "bg-orange-500/10",
-  },
-  {
-    step: 5,
-    title: "Масштабирование",
-    description: "Оптимизирую производительность, добавляю новые функции, интегрирую дополнительные сервисы по мере роста потребностей.",
-    icon: TrendingUp,
-    tools: ["Optimization", "New Features", "Scaling"],
-    deliverable: "План развития и улучшений",
     color: "text-green-500",
-    bgColor: "bg-green-500/10",
+    background: "bg-green-500/10",
   },
 ];
 
-const guarantees = [
-  "Прозрачное ценообразование — оплата по этапам",
-  "Документация и обучение команды",
-  "Поддержка после запуска 30 дней",
-  "Передача всех исходников и доступов",
+const startConditions = [
+  "Какой участок процесса входит в первый этап",
+  "С какими каналами и системами нужно интегрироваться",
+  "Где AI действует сам, а где требуется сотрудник",
+  "По каким условиям принимаем работу",
 ];
 
 export function Process() {
   return (
     <section id="process" className="py-20">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="text-center mb-12">
-          <Badge variant="outline" className="mb-4">
-            Процесс
-          </Badge>
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-            Как я <span className="gradient-text">работаю</span>
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="mb-12 text-center">
+          <Badge variant="outline" className="mb-4">Внедрение под ключ</Badge>
+          <h2 className="mb-4 text-3xl font-bold sm:text-4xl">
+            От разбора процесса <span className="gradient-text">до production</span>
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            От диагностики до production за 7 дней. Прозрачный процесс с понятными результатами на каждом этапе.
+          <p className="mx-auto max-w-2xl text-muted-foreground">
+            Объём, сроки и критерии запуска зависят от процесса, данных и интеграций.
+            Сначала проясняем границы, затем фиксируем план работ.
           </p>
         </div>
 
-        {/* Process Steps - Horizontal Timeline */}
         <div className="relative">
-          {/* Connection line for desktop */}
-          <div className="hidden lg:block absolute top-24 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-500/50 via-primary/50 to-green-500/50" />
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
-            {processSteps.map((step, index) => {
+          <div className="absolute left-5 top-0 hidden h-full w-px bg-gradient-to-b from-blue-500/40 via-primary/40 to-green-500/40 md:block" />
+          <div className="space-y-4">
+            {processSteps.map((step) => {
               const Icon = step.icon;
               return (
-                <div key={step.step} className="relative">
-                  {/* Step number circle */}
-                  <div className="hidden lg:flex absolute -top-2 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-background border-2 border-border items-center justify-center text-sm font-bold z-10">
-                    {step.step}
-                  </div>
-
-                  <Card className="h-full border-border/50 bg-card/50 backdrop-blur-sm hover:shadow-lg transition-all hover:-translate-y-1">
-                    <CardContent className="pt-8 pb-6 px-5">
-                      {/* Icon */}
-                      <div className={`w-12 h-12 rounded-xl ${step.bgColor} flex items-center justify-center mb-4`}>
-                        <Icon className={`h-6 w-6 ${step.color}`} />
-                      </div>
-
-                      {/* Title */}
-                      <h3 className="font-semibold text-lg mb-2">{step.title}</h3>
-
-                      {/* Description */}
-                      <p className="text-sm text-muted-foreground mb-4">
-                        {step.description}
-                      </p>
-
-                      {/* Tools */}
-                      <div className="flex flex-wrap gap-1.5 mb-3">
-                        {step.tools.map((tool) => (
-                          <Badge key={tool} variant="secondary" className="text-xs">
-                            {tool}
-                          </Badge>
-                        ))}
-                      </div>
-
-                      {/* Deliverable */}
-                      <div className="pt-3 border-t border-border/50">
-                        <div className="text-xs text-muted-foreground mb-1">Результат:</div>
-                        <div className="text-sm font-medium">{step.deliverable}</div>
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  {/* Arrow for desktop */}
-                  {index < processSteps.length - 1 && (
-                    <div className="hidden lg:flex absolute top-1/2 -right-3 transform -translate-y-1/2 z-20">
-                      <ArrowRight className="h-5 w-5 text-muted-foreground/50" />
+                <Card key={step.step} className="border-border/50 bg-card/50 backdrop-blur-sm">
+                  <CardContent className="grid gap-5 p-5 md:grid-cols-[3rem_1fr_18rem] md:items-center md:gap-6 md:p-6">
+                    <div className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full border border-border bg-background text-xs font-semibold text-primary">
+                      {step.step}
                     </div>
-                  )}
-                </div>
+                    <div>
+                      <div className="mb-2 flex items-center gap-3">
+                        <div className={`flex h-9 w-9 items-center justify-center rounded-lg ${step.background}`}>
+                          <Icon className={`h-4 w-4 ${step.color}`} />
+                        </div>
+                        <h3 className="text-lg font-semibold">{step.title}</h3>
+                      </div>
+                      <p className="text-sm leading-relaxed text-muted-foreground">{step.description}</p>
+                    </div>
+                    <div className="border-l border-border/50 pl-4 md:border-l md:pl-5">
+                      <div className="mb-1 text-xs uppercase tracking-wider text-muted-foreground">На выходе</div>
+                      <div className="text-sm font-medium">{step.output}</div>
+                    </div>
+                  </CardContent>
+                </Card>
               );
             })}
           </div>
         </div>
 
-        {/* Guarantees */}
-        <div className="mt-16 p-6 rounded-2xl bg-muted/30 border border-border/50">
-          <h3 className="font-semibold text-lg mb-4 text-center">Гарантии сотрудничества</h3>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {guarantees.map((guarantee, index) => (
-              <div key={index} className="flex items-center gap-3">
-                <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
-                <span className="text-sm text-muted-foreground">{guarantee}</span>
-              </div>
-            ))}
+        <div className="mt-12 rounded-2xl border border-border/50 bg-muted/30 p-6 sm:p-8">
+          <div className="grid gap-8 lg:grid-cols-[1fr_1.2fr] lg:items-center">
+            <div>
+              <h3 className="mb-2 text-xl font-semibold">До начала работ фиксируем рамки</h3>
+              <p className="text-sm leading-relaxed text-muted-foreground">
+                Так решение можно оценить по работе процесса, а не по числу подключённых AI-инструментов.
+              </p>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2">
+              {startConditions.map((condition) => (
+                <div key={condition} className="flex items-start gap-2 text-sm text-muted-foreground">
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                  <span>{condition}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="mt-6 border-t border-border/50 pt-5 text-center">
+            <Button asChild>
+              <a href="#contact">Обсудить ваш процесс <ArrowRight className="ml-2 h-4 w-4" /></a>
+            </Button>
           </div>
         </div>
       </div>

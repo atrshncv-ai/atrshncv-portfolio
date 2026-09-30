@@ -7,20 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { 
-  Mail, 
-  Phone, 
-  MapPin, 
-  Send, 
-  MessageSquare,
-  Calendar,
-  Briefcase,
-  Rocket,
-  HelpCircle,
-  Clock,
-  Globe,
-  Zap
-} from "lucide-react";
+import { Briefcase, HelpCircle, Mail, MapPin, MessageSquare, Phone, Rocket, Send, Workflow } from "lucide-react";
 
 const contactInfo = [
   {
@@ -54,28 +41,28 @@ const contactInfo = [
 ];
 
 const requestTypes = [
-  { icon: Calendar, label: "Discovery Call", value: "call", description: "Бесплатная 30-мин консультация" },
-  { icon: Rocket, label: "Новый проект", value: "project", description: "AI-автоматизация под ключ" },
-  { icon: Briefcase, label: "Вакансия", value: "job", description: "Работа в команде" },
-  { icon: HelpCircle, label: "Вопрос", value: "consultation", description: "Технические вопросы" },
+  { icon: Rocket, label: "Внедрить AI", value: "implementation", description: "Задача под ключ" },
+  { icon: Workflow, label: "Разобрать процесс", value: "process", description: "Найти подходящий сценарий" },
+  { icon: Briefcase, label: "Проект", value: "project", description: "Обсудить конкретный проект" },
+  { icon: HelpCircle, label: "Другой вопрос", value: "other", description: "Задать вопрос" },
 ];
 
 export function Contact() {
-  const [selectedType, setSelectedType] = useState<string | null>(null);
+  const [selectedType, setSelectedType] = useState("implementation");
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
-    const formData = new FormData(e.currentTarget);
+    const formData = new FormData(event.currentTarget);
     const requestType = requestTypes.find((type) => type.value === selectedType);
-    const subject = `Запрос с портфолио: ${requestType?.label || "Вопрос"}`;
+    const subject = `Обсудить AI-внедрение: ${requestType?.label ?? "Вопрос"}`;
     const body = [
       `Имя: ${formData.get("name") || ""}`,
       `Email для ответа: ${formData.get("email") || ""}`,
       `Компания / сайт: ${formData.get("company") || "не указаны"}`,
-      `Тип запроса: ${requestType?.label || "Вопрос"}`,
+      `Тема: ${requestType?.label ?? "Вопрос"}`,
       "",
-      "Описание задачи:",
+      "Как сейчас устроен процесс и что хотелось бы изменить:",
       String(formData.get("message") || ""),
     ].join("\n");
 
@@ -83,226 +70,153 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="py-20 bg-muted/30">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="text-center mb-12">
-          <Badge variant="outline" className="mb-4">
-            Контакты
-          </Badge>
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-            Автоматизируем <span className="gradient-text">рутину вместе</span>
+    <section id="contact" className="bg-muted/30 py-20">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="mb-12 text-center">
+          <Badge variant="outline" className="mb-4">Контакты</Badge>
+          <h2 className="mb-4 text-3xl font-bold sm:text-4xl">
+            Обсудим, <span className="gradient-text">где поможет AI</span>
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Расскажите о вашей задаче — предложу решение и оценю сроки. 
-            Первая консультация бесплатно.
+          <p className="mx-auto max-w-2xl text-muted-foreground">
+            Опишите, как сегодня обрабатываются заявки и где команда тратит время на повторяющиеся действия.
+            Разберём задачу и следующий практический шаг.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-8">
-          {/* Contact Form */}
+        <div className="grid gap-8 lg:grid-cols-2">
           <Card className="border-border/50 bg-card/50 backdrop-blur-sm">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-lg">
                 <MessageSquare className="h-5 w-5 text-primary" />
-                Отправить запрос
+                Расскажите о процессе
               </CardTitle>
             </CardHeader>
             <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  {/* Name */}
-                  <div className="space-y-2">
-                    <Label htmlFor="name">Имя</Label>
-                    <Input id="name" name="name" placeholder="Как вас зовут?" required />
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="name">Имя</Label>
+                  <Input id="name" name="name" autoComplete="name" placeholder="Как к вам обращаться?" required />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="email">Email для ответа</Label>
+                  <Input id="email" name="email" type="email" autoComplete="email" placeholder="name@company.com" required />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="company">Компания или сайт</Label>
+                  <Input id="company" name="company" placeholder="Название или URL (необязательно)" />
+                </div>
+                <fieldset className="space-y-2">
+                  <legend className="text-sm font-medium">С чем хотите разобраться?</legend>
+                  <div className="grid grid-cols-2 gap-2">
+                    {requestTypes.map((type) => {
+                      const Icon = type.icon;
+                      const isSelected = selectedType === type.value;
+                      return (
+                        <button
+                          key={type.value}
+                          type="button"
+                          aria-pressed={isSelected}
+                          onClick={() => setSelectedType(type.value)}
+                          className={`rounded-lg border p-3 text-left transition-colors ${
+                            isSelected
+                              ? "border-primary bg-primary/10"
+                              : "border-border/50 bg-card/50 hover:border-border"
+                          }`}
+                        >
+                          <span className="mb-1 flex items-center gap-2">
+                            <Icon className={`h-4 w-4 ${isSelected ? "text-primary" : "text-muted-foreground"}`} />
+                            <span className="text-sm font-medium">{type.label}</span>
+                          </span>
+                          <span className="block text-xs text-muted-foreground">{type.description}</span>
+                        </button>
+                      );
+                    })}
                   </div>
-
-                  {/* Email */}
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
-                    <Input id="email" name="email" type="email" placeholder="email@example.com" required />
-                  </div>
-
-                  {/* Company / Website */}
-                  <div className="space-y-2">
-                    <Label htmlFor="company">Компания / Сайт</Label>
-                    <Input id="company" name="company" placeholder="Название или URL" />
-                  </div>
-
-                  {/* Request Type */}
-                  <div className="space-y-2">
-                    <Label>Тип запроса</Label>
-                    <div className="grid grid-cols-2 gap-2">
-                      {requestTypes.map((type) => {
-                        const Icon = type.icon;
-                        return (
-                          <button
-                            key={type.value}
-                            type="button"
-                            onClick={() => setSelectedType(type.value)}
-                            className={`flex flex-col items-start gap-1 p-3 rounded-lg border transition-colors text-left ${
-                              selectedType === type.value
-                                ? "border-primary bg-primary/10"
-                                : "border-border/50 hover:border-border bg-card/50"
-                            }`}
-                          >
-                            <div className="flex items-center gap-2">
-                              <Icon className={`h-4 w-4 ${selectedType === type.value ? 'text-primary' : 'text-muted-foreground'}`} />
-                              <span className="text-sm font-medium">{type.label}</span>
-                            </div>
-                            <span className="text-xs text-muted-foreground">{type.description}</span>
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-
-                  {/* Message */}
-                  <div className="space-y-2">
-                    <Label htmlFor="message">Опишите задачу</Label>
-                    <Textarea
-                      id="message"
-                      name="message"
-                      placeholder="Какую проблему нужно решить? Есть ли дедлайны? Бюджет?"
-                      className="min-h-[120px]"
-                      required
-                    />
-                  </div>
-
-                  {/* Submit */}
-                  <Button
-                    type="submit"
-                    className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
-                  >
-                    <Mail className="h-4 w-4 mr-2" />
-                    Открыть черновик письма
-                  </Button>
-                  <p className="text-xs leading-relaxed text-muted-foreground" role="note">
-                    Откроется почтовое приложение с заполненным письмом. Чтобы отправить запрос, нажмите «Отправить» в своём приложении. Данные не передаются этому сайту.
-                  </p>
-                </form>
+                </fieldset>
+                <div className="space-y-2">
+                  <Label htmlFor="message">Опишите текущий процесс</Label>
+                  <Textarea
+                    id="message"
+                    name="message"
+                    placeholder="Откуда приходят обращения? Что команда делает вручную? Где теряются время или следующий контакт?"
+                    className="min-h-[130px]"
+                    required
+                  />
+                </div>
+                <Button type="submit" className="w-full">
+                  <Mail className="mr-2 h-4 w-4" /> Подготовить письмо
+                </Button>
+                <p className="text-xs leading-relaxed text-muted-foreground" role="note">
+                  Откроется почтовое приложение с заполненным черновиком. Чтобы отправить запрос,
+                  нажмите «Отправить» в своём приложении. Данные не передаются этому сайту.
+                </p>
+              </form>
             </CardContent>
           </Card>
 
-          {/* Contact Info & Quick Actions */}
           <div className="space-y-6">
-            {/* Quick Actions */}
-            <Card className="border-border/50 bg-card/50 backdrop-blur-sm gradient-border">
+            <Card className="border-border/50 bg-card/50 backdrop-blur-sm">
               <CardContent className="pt-6">
-                <h3 className="font-semibold mb-4">Быстрые действия</h3>
+                <h3 className="mb-4 font-semibold">Написать напрямую</h3>
                 <div className="space-y-3">
-                  <Button
-                    asChild
-                    className="w-full justify-start bg-primary hover:bg-primary/90 text-primary-foreground"
-                  >
+                  <Button asChild className="w-full justify-start">
                     <a href="https://t.me/a_trshncv" target="_blank" rel="noopener noreferrer">
-                      <Send className="h-4 w-4 mr-3" />
-                      Написать в Telegram
-                      <Badge variant="secondary" className="ml-auto text-xs">Рекомендую</Badge>
+                      <Send className="mr-3 h-4 w-4" /> Написать в Telegram
+                      <Badge variant="secondary" className="ml-auto text-xs">Удобный способ</Badge>
                     </a>
                   </Button>
-                  <Button
-                    asChild
-                    variant="outline"
-                    className="w-full justify-start"
-                  >
+                  <Button asChild variant="outline" className="w-full justify-start">
                     <a href="mailto:alexander.trishencov@gmail.com">
-                      <Mail className="h-4 w-4 mr-3" />
-                      Отправить Email
+                      <Mail className="mr-3 h-4 w-4" /> Написать на email
                     </a>
                   </Button>
                 </div>
               </CardContent>
             </Card>
 
-            {/* Contact Info */}
             <Card className="border-border/50 bg-card/50 backdrop-blur-sm">
               <CardContent className="pt-6">
-                <h3 className="font-semibold mb-4">Контактная информация</h3>
-                <div className="space-y-2">
-                  {contactInfo.map((item, index) => {
+                <h3 className="mb-3 font-semibold">Контактная информация</h3>
+                <div className="space-y-1">
+                  {contactInfo.map((item) => {
                     const Icon = item.icon;
-                    const content = (
-                      <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-accent/50 transition-colors">
-                        <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    const details = (
+                      <div className="flex items-center gap-3 rounded-lg p-3 transition-colors hover:bg-accent/50">
+                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10">
                           <Icon className="h-5 w-5 text-primary" />
-                        </div>
-                        <div className="min-w-0 flex-1">
-                          <div className="flex items-center gap-2">
-                            <span className="text-sm text-muted-foreground">{item.label}</span>
-                            {item.preferred && (
-                              <Badge variant="secondary" className="text-xs py-0">
-                                <Zap className="h-3 w-3 mr-1" />
-                                Быстро
-                              </Badge>
-                            )}
-                          </div>
-                          <div className="font-medium truncate">{item.value}</div>
-                        </div>
+                        </span>
+                        <span className="min-w-0 flex-1">
+                          <span className="flex items-center gap-2 text-sm text-muted-foreground">
+                            {item.label}
+                            {item.preferred && <Badge variant="secondary" className="py-0 text-xs">Быстро</Badge>}
+                          </span>
+                          <span className="block truncate font-medium">{item.value}</span>
+                        </span>
                       </div>
                     );
 
                     return item.href ? (
                       <a
-                        key={index}
+                        key={item.label}
                         href={item.href}
                         target={item.href.startsWith("http") ? "_blank" : undefined}
                         rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
                         className="block"
                       >
-                        {content}
+                        {details}
                       </a>
-                    ) : (
-                      <div key={index}>{content}</div>
-                    );
+                    ) : <div key={item.label}>{details}</div>;
                   })}
                 </div>
               </CardContent>
             </Card>
 
-            {/* Response Time & Timezone */}
-            <div className="grid grid-cols-2 gap-4">
-              <Card className="border-border/50 bg-card/50 backdrop-blur-sm">
-                <CardContent className="pt-4 pb-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-green-500/10 flex items-center justify-center">
-                      <Clock className="h-5 w-5 text-green-500" />
-                    </div>
-                    <div>
-                      <div className="font-medium text-sm">Время ответа</div>
-                      <div className="text-xs text-muted-foreground">Обычно &lt;24 часа</div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="border-border/50 bg-card/50 backdrop-blur-sm">
-                <CardContent className="pt-4 pb-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-blue-500/10 flex items-center justify-center">
-                      <Globe className="h-5 w-5 text-blue-500" />
-                    </div>
-                    <div>
-                      <div className="font-medium text-sm">Часовой пояс</div>
-                      <div className="text-xs text-muted-foreground">UTC+3 (Москва)</div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+            <div className="rounded-2xl border border-primary/20 bg-primary/5 p-5">
+              <p className="text-sm leading-relaxed text-muted-foreground">
+                Для первого разговора достаточно описать текущий путь заявки и один этап,
+                который хотелось бы снять с команды.
+              </p>
             </div>
-
-            {/* Availability */}
-            <Card className="border-border/50 bg-card/50 backdrop-blur-sm">
-              <CardContent className="pt-4 pb-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse" />
-                    <span className="text-sm">Открыт для новых проектов</span>
-                  </div>
-                  <Badge variant="outline" className="text-green-500 border-green-500/30">
-                    Available
-                  </Badge>
-                </div>
-              </CardContent>
-            </Card>
           </div>
         </div>
       </div>

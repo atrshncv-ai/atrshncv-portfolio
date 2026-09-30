@@ -2,226 +2,99 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { 
-  Brain, 
-  Code, 
-  Workflow, 
-  Bot, 
-  Zap,
-  Database,
-  Video,
-  Image,
-  Cpu,
-  CheckCircle2
-} from "lucide-react";
+import { Brain, CheckCircle2, Code2, Workflow } from "lucide-react";
 
-const skillCategories = [
+const capabilityGroups = [
   {
-    title: "LLM & AI",
+    title: "AI и диалоги",
     icon: Brain,
-    color: "text-primary",
-    bgColor: "bg-primary/10",
-    description: "Построение интеллектуальных систем на базе языковых моделей",
-    skills: [
-      { name: "GPT-4 / GPT-5", use: "Сложные задачи рассуждения, кодогенерация, анализ" },
-      { name: "Claude", use: "Длинные контексты, анализ документов, безопасные ответы" },
-      { name: "Gemini", use: "Мультимодальные задачи, интеграция с Google" },
-      { name: "Llama / Open Source", use: "On-premise решения, приватность данных" },
+    tone: "text-primary",
+    background: "bg-primary/10",
+    summary: "Сценарии, которые понимают запрос и действуют в рамках процесса.",
+    capabilities: [
+      "LLM-интеграции",
+      "Классификация и квалификация обращений",
+      "RAG и работа с базой знаний",
+      "Проектирование диалоговых сценариев",
     ],
-    techniques: [
-      { name: "Prompt Engineering", use: "Снижение costs на 40-65%, повышение качества" },
-      { name: "RAG", use: "Подключение базы знаний к LLM для точных ответов" },
-      { name: "Multi-agent", use: "Цепочки агентов для сложных multi-step задач" },
-      { name: "Fine-tuning (LoRA)", use: "Специализация модели под домен" },
-    ],
+    tools: ["OpenAI", "Claude", "Llama", "LangChain"],
   },
   {
-    title: "Automation & Integration",
+    title: "Автоматизация и интеграции",
     icon: Workflow,
-    color: "text-blue-500",
-    bgColor: "bg-blue-500/10",
-    description: "Построение надежных автоматизированных workflow",
-    skills: [
-      { name: "n8n", use: "Основной инструмент для сложных workflow, self-hosted" },
-      { name: "Make (Integromat)", use: "Интеграции с популярными сервисами" },
-      { name: "Zapier", use: "Быстрые интеграции для простых задач" },
-      { name: "Custom Scripts", use: "Node.js / Python для нестандартных задач" },
+    tone: "text-blue-500",
+    background: "bg-blue-500/10",
+    summary: "Связь AI-сценария с каналами и сервисами компании.",
+    capabilities: [
+      "Оркестрация workflow",
+      "REST API и webhooks",
+      "Боты и клиентские каналы",
+      "Обработка повторных действий и ошибок",
     ],
-    techniques: [
-      { name: "Webhooks", use: "Real-time обработка событий" },
-      { name: "Error Handling", use: "Retry logic, fallbacks, уведомления о сбоях" },
-      { name: "Rate Limiting", use: "Управление квотами API, очереди" },
-      { name: "Monitoring", use: "Логирование, алертинг, дашборды" },
-    ],
+    tools: ["n8n", "Make", "Telegram Bot API", "Webhooks"],
   },
   {
-    title: "Development",
-    icon: Code,
-    color: "text-purple-500",
-    bgColor: "bg-purple-500/10",
-    description: "AI-first разработка: архитектуру проектирую, код пишет AI",
-    skills: [
-      { name: "React / Next.js", use: "SPA, SSR, SSG приложения" },
-      { name: "TypeScript", use: "Type-safe разработка" },
-      { name: "Tailwind CSS", use: "Быстрая вёрстка с дизайн-системой" },
-      { name: "Supabase", use: "Backend-as-a-Service, аутентификация, БД" },
+    title: "Разработка и production",
+    icon: Code2,
+    tone: "text-purple-500",
+    background: "bg-purple-500/10",
+    summary: "Рабочая система с понятными границами, эксплуатацией и передачей.",
+    capabilities: [
+      "Сервисная и интеграционная логика",
+      "Проверка ответа и ограничение сценариев",
+      "Логирование и уведомления о сбоях",
+      "Передача нестандартного запроса сотруднику",
     ],
-    techniques: [
-      { name: "Telegram Mini Apps", use: "Полноценные UI внутри Telegram" },
-      { name: "API Development", use: "REST endpoints, webhooks" },
-      { name: "PWA", use: "Оффлайн-приложения, push-уведомления" },
-      { name: "Deployment", use: "Vercel, Docker, CI/CD" },
-    ],
+    tools: ["TypeScript", "Python", "PostgreSQL", "React"],
   },
-  {
-    title: "Data & Vector DBs",
-    icon: Database,
-    color: "text-orange-500",
-    bgColor: "bg-orange-500/10",
-    description: "Хранение и поиск в векторных пространствах для RAG",
-    skills: [
-      { name: "Pinecone", use: "Managed vector DB, production-ready" },
-      { name: "Qdrant", use: "Self-hosted vector search, фильтрация" },
-      { name: "Weaviate", use: "Гибридный поиск, модульность" },
-      { name: "pgvector", use: "Векторный поиск в PostgreSQL" },
-    ],
-    techniques: [
-      { name: "Embeddings", use: "OpenAI, Cohere, local models" },
-      { name: "Chunking", use: "Оптимизация размера для контекста" },
-      { name: "Hybrid Search", use: "Комбинация векторного + keyword" },
-      { name: "Reranking", use: "Улучшение релевантности результатов" },
-    ],
-  },
-  {
-    title: "AI Content Generation",
-    icon: Video,
-    color: "text-red-500",
-    bgColor: "bg-red-500/10",
-    description: "Генерация мультимедийного контента для бизнеса",
-    skills: [
-      { name: "SUNO / Udio", use: "Генерация музыки, 1200+ треков продакшн" },
-      { name: "HeyGen", use: "AI-аватары, автоматизация видео-продакшна" },
-      { name: "Kling", use: "Генерация видео из текста" },
-      { name: "ElevenLabs", use: "Клонирование голоса, TTS" },
-    ],
-    techniques: [
-      { name: "Batch Processing", use: "Обработка сотен запросов параллельно" },
-      { name: "Quality Control", use: "Автоматическая проверка результатов" },
-      { name: "Post-processing", use: "FFmpeg, монтаж, оптимизация" },
-      { name: "API Integration", use: "Программный доступ к генераторам" },
-    ],
-  },
-  {
-    title: "Bots & Conversational AI",
-    icon: Bot,
-    color: "text-cyan-500",
-    bgColor: "bg-cyan-500/10",
-    description: "Интеллектуальные боты с LLM-интеграцией",
-    skills: [
-      { name: "Telegram Bot API", use: "10+ ботов, Mini Apps, payments" },
-      { name: "OpenAI Assistants", use: "Stateful диалоги, file search" },
-      { name: "Custom Agents", use: "Автономные агенты с tool use" },
-      { name: "Voice Interfaces", use: "Speech-to-text, text-to-speech" },
-    ],
-    techniques: [
-      { name: "Context Management", use: "Сохранение истории диалога" },
-      { name: "Intent Recognition", use: "Классификация запросов" },
-      { name: "Human Handoff", use: "Передача сложных случаев оператору" },
-      { name: "Analytics", use: "Метрики использования, sentiment" },
-    ],
-  },
-];
-
-const additionalCapabilities = [
-  { icon: Zap, label: "Быстрый прототипинг (1-3 дня)" },
-  { icon: CheckCircle2, label: "Production-ready качество" },
-  { icon: Cpu, label: "Русский / English B1" },
-  { icon: Database, label: "Документация и передача знаний" },
 ];
 
 export function Skills() {
   return (
-    <section id="skills" className="py-20">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="text-center mb-12">
-          <Badge variant="outline" className="mb-4">
-            Стек
-          </Badge>
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-            Технологии и <span className="gradient-text">компетенции</span>
+    <section id="skills" className="bg-muted/30 py-20">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="mb-12 text-center">
+          <Badge variant="outline" className="mb-4">Инженерная практика</Badge>
+          <h2 className="mb-4 text-3xl font-bold sm:text-4xl">
+            Инструменты — <span className="gradient-text">под задачу</span>
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Не просто список инструментов — а конкретные сценарии применения. 
-            Каждая технология выбрана под задачу.
+          <p className="mx-auto max-w-2xl text-muted-foreground">
+            Подбираю модели и интеграции под процесс, данные и требования к эксплуатации.
+            Вот компетенции, которые нужны для такого внедрения.
           </p>
         </div>
 
-        {/* Skill Categories Grid */}
-        <div className="grid md:grid-cols-2 gap-6 mb-12">
-          {skillCategories.map((category, index) => {
-            const Icon = category.icon;
+        <div className="grid gap-6 lg:grid-cols-3">
+          {capabilityGroups.map((group) => {
+            const Icon = group.icon;
             return (
-              <Card key={index} className="border-border/50 bg-card/50 backdrop-blur-sm hover:shadow-lg transition-shadow">
+              <Card key={group.title} className="border-border/50 bg-card/50 backdrop-blur-sm">
                 <CardHeader className="pb-3">
                   <CardTitle className="flex items-center gap-3 text-lg">
-                    <div className={`w-10 h-10 rounded-lg ${category.bgColor} flex items-center justify-center flex-shrink-0`}>
-                      <Icon className={`h-5 w-5 ${category.color}`} />
-                    </div>
-                    <div>
-                      <div>{category.title}</div>
-                      <p className="text-xs font-normal text-muted-foreground mt-0.5">
-                        {category.description}
-                      </p>
-                    </div>
+                    <span className={`flex h-10 w-10 items-center justify-center rounded-lg ${group.background}`}>
+                      <Icon className={`h-5 w-5 ${group.tone}`} />
+                    </span>
+                    {group.title}
                   </CardTitle>
+                  <p className="text-sm leading-relaxed text-muted-foreground">{group.summary}</p>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  {/* Core Skills */}
-                  <div>
-                    <div className="text-xs font-medium text-muted-foreground mb-2">ТЕХНОЛОГИИ</div>
-                    <div className="space-y-2">
-                      {category.skills.map((skill) => (
-                        <div key={skill.name} className="flex items-start gap-2">
-                          <CheckCircle2 className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
-                          <div>
-                            <span className="font-medium text-sm">{skill.name}</span>
-                            <span className="text-xs text-muted-foreground ml-1">— {skill.use}</span>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Techniques */}
-                  <div>
-                    <div className="text-xs font-medium text-muted-foreground mb-2">ТЕХНИКИ</div>
+                <CardContent>
+                  <ul className="mb-5 space-y-3">
+                    {group.capabilities.map((capability) => (
+                      <li key={capability} className="flex items-start gap-2 text-sm">
+                        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                        <span>{capability}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="border-t border-border/50 pt-4">
+                    <div className="mb-2 text-xs font-medium uppercase tracking-wider text-muted-foreground">Примеры инструментов</div>
                     <div className="flex flex-wrap gap-1.5">
-                      {category.techniques.map((tech) => (
-                        <Badge key={tech.name} variant="secondary" className="text-xs">
-                          {tech.name}
-                        </Badge>
-                      ))}
+                      {group.tools.map((tool) => <Badge key={tool} variant="secondary" className="text-xs">{tool}</Badge>)}
                     </div>
                   </div>
                 </CardContent>
               </Card>
-            );
-          })}
-        </div>
-
-        {/* Additional Capabilities */}
-        <div className="flex flex-wrap justify-center gap-3">
-          {additionalCapabilities.map((item, index) => {
-            const Icon = item.icon;
-            return (
-              <Badge
-                key={index}
-                variant="outline"
-                className="px-4 py-2 text-sm border-border/50 bg-card/50 hover:bg-primary/10 hover:border-primary/30 transition-colors cursor-default"
-              >
-                <Icon className="h-4 w-4 mr-2 text-primary" />
-                {item.label}
-              </Badge>
             );
           })}
         </div>

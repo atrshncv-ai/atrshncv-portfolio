@@ -19,4 +19,5 @@
 
 | Начат | Папка | Статус | Итог |
 |---|---|---|---|
-| 2026-09-29 | `2026-09-29-github-pages-publish` | сдан | Портфолио опубликовано на бесплатном GitHub Pages: https://atrshncv-design.github.io/atrshncv-portfolio/ |
+| 2026-09-29 | `2026-09-29-github-pages-publish` | сдан | Портфолио опубликовано на бесплатном GitHub Pages: https://atrshncv-ai.github.io/atrshncv-portfolio/ |
+| 2026-09-30 | `2026-09-30-portfolio-positioning` | публикуется | Аудит и переработка позиционирования для владельцев бизнеса, которым нужно внедрить AI |

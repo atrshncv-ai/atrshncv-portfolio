@@ -10,7 +10,7 @@ The portfolio includes three featured case studies, six smaller projects, a skil
 
 ## Key capabilities
 
-- **9 case studies**, including BTC Sarria, AI Music Generator and Content Factory.
+- Selected projects include BTC Sarria, AI Music Generator and Content Factory.
 - **Skills matrix** covering LLM and AI, workflow automation, integrations, development and GIS.
 - **Engagement process** from diagnostics and architecture through implementation and support.
 - **Contact options** that open Telegram or an email draft; there is no server-side contact form.
@@ -37,7 +37,7 @@ npm run build      # Export the static site to out/
 
 ## Free GitHub Pages deployment
 
-This public repository can use GitHub Pages on GitHub Free. The site URL is <https://atrshncv-design.github.io/atrshncv-portfolio/>; a custom domain is optional.
+This public repository can use GitHub Pages on GitHub Free. The site URL is <https://atrshncv-ai.github.io/atrshncv-portfolio/>; a custom domain is optional.
 
 1. In the repository, open **Settings → Pages**.
 2. Under **Build and deployment**, set **Source** to **GitHub Actions**.
@@ -76,7 +76,7 @@ No license file is included; all rights reserved.
 
 ## Возможности
 
-- **9 кейсов**, в том числе BTC Sarria, AI Music Generator и Content Factory.
+- Среди проектов — BTC Sarria, AI Music Generator и Content Factory.
 - **Матрица навыков** по LLM и AI, автоматизации процессов, интеграциям, разработке и GIS.
 - **Процесс работы**: от диагностики и архитектуры до внедрения и поддержки.
 - **Способы связи**: ссылки на Telegram и email; форма открывает черновик письма и не отправляет его через сервер.
@@ -103,7 +103,7 @@ npm run build      # Статическая сборка сайта в out/
 
 ## Бесплатная публикация на GitHub Pages
 
-Для этого публичного репозитория GitHub Pages доступен на бесплатном тарифе GitHub Free. Адрес сайта: <https://atrshncv-design.github.io/atrshncv-portfolio/>; собственный домен подключать необязательно.
+Для этого публичного репозитория GitHub Pages доступен на бесплатном тарифе GitHub Free. Адрес сайта: <https://atrshncv-ai.github.io/atrshncv-portfolio/>; собственный домен подключать необязательно.
 
 1. Откройте в репозитории **Settings → Pages**.
 2. В разделе **Build and deployment** выберите для **Source** вариант **GitHub Actions**.

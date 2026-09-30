@@ -4,7 +4,7 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { publicAssetPath } from "@/lib/public-path";
 
-const siteUrl = "https://atrshncv-design.github.io/atrshncv-portfolio/";
+const siteUrl = "https://atrshncv-ai.github.io/atrshncv-portfolio/";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,27 +17,19 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Александр Трищенков | AI Automation Specialist — n8n, Make, RAG, LLM Integrations",
+  title: "Александр Трищенков — внедрение AI для заявок и поддержки",
   description:
-    "AI Automation Specialist с 3+ годами опыта. Помогаю бизнесу автоматизировать процессы с помощью LLM, API и no-code (n8n, Make, Zapier). Сэкономлено 1000+ часов. RAG-системы, AI-агенты, интеграции. Book a free discovery call.",
+    "Проектирую и внедряю AI-сценарии для квалификации входящих заявок, клиентских ответов и follow-up — от разбора процесса до запуска в production.",
   keywords: [
-    "AI Automation",
-    "AI Automation Specialist",
-    "LLM Integration",
-    "n8n Expert",
-    "Make Automation",
-    "Zapier",
-    "OpenAI",
-    "Claude API",
-    "RAG Systems",
-    "Prompt Engineering",
-    "Telegram Bot Development",
-    "API Integration",
-    "No-code Automation",
-    "Low-code",
-    "Process Automation",
-    "AI Agent Development",
-    "Workflow Automation",
+    "AI-автоматизация для бизнеса",
+    "внедрение AI",
+    "обработка входящих заявок",
+    "квалификация лидов",
+    "автоматизация поддержки клиентов",
+    "AI-интеграции",
+    "автоматизация follow-up",
+    "AI agents",
+    "LLM-интеграции",
     "Александр Трищенков",
     "Trishencov",
   ],
@@ -59,22 +51,22 @@ export const metadata: Metadata = {
     icon: publicAssetPath("/logo.svg"),
   },
   openGraph: {
-    title: "Александр Трищенков | AI Automation Specialist — n8n, Make, RAG",
+    title: "Александр Трищенков — внедрение AI для заявок и поддержки",
     description:
-      "AI Automation Specialist. Автоматизация бизнес-процессов с помощью LLM, n8n, Make. RAG-системы, AI-агенты, интеграции. 1000+ часов сэкономлено для бизнеса.",
+      "Разбор процесса, проектирование решения, интеграция и запуск AI-сценариев для обработки заявок и клиентской поддержки.",
     url: siteUrl,
     siteName: "Александр Трищенков — AI Automation",
     type: "profile",
     locale: "ru_RU",
     firstName: "Александр",
     lastName: "Трищенков",
-    username: "atrshncv",
+    username: "atrshncv-ai",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Александр Трищенков | AI Automation Specialist",
+    title: "Александр Трищенков — внедрение AI для бизнеса",
     description:
-      "AI Automation Specialist. n8n, Make, LLM интеграции. Сэкономлено 1000+ часов ручной работы.",
+      "AI-квалификация входящих заявок и поддержка клиентов — от разбора процесса до production.",
     creator: "@a_trshncv",
   },
   alternates: {
@@ -86,12 +78,12 @@ export const metadata: Metadata = {
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
-  "@id": "https://trishencov.space/#person",
+  "@id": "https://atrshncv-ai.github.io/atrshncv-portfolio/#person",
   name: "Александр Трищенков",
   alternateName: "Alexander Trishencov",
   jobTitle: "AI Automation Specialist",
   description:
-    "AI Automation Specialist с 3+ годами опыта. Специализируюсь на LLM интеграциях, RAG-системах и автоматизации бизнес-процессов с помощью n8n, Make, Zapier.",
+    "Проектирую и внедряю AI-сценарии для обработки заявок и клиентской поддержки: от разбора процесса до интеграции и запуска.",
   url: siteUrl,
   email: "alexander.trishencov@gmail.com",
   telephone: "+7-912-468-76-70",
@@ -102,12 +94,15 @@ const jsonLd = {
   },
   sameAs: [
     "https://t.me/a_trshncv",
-    "https://github.com/atrshncv-design",
+    "https://github.com/atrshncv-ai",
     "https://vk.ru/a_trshncv",
   ],
   knowsAbout: [
-    "AI Automation",
-    "LLM Integration",
+    "AI-автоматизация",
+    "обработка заявок",
+    "квалификация лидов",
+    "клиентская поддержка",
+    "LLM-интеграции",
     "n8n",
     "Make",
     "Zapier",
@@ -139,19 +134,13 @@ const jsonLdService = {
   "@type": "ProfessionalService",
   name: "AI Automation Services by Alexander Trishencov",
   description:
-    "AI-автоматизация бизнес-процессов: LLM интеграции, RAG-системы, автоматизация workflow с помощью n8n, Make, Zapier.",
+    "Внедрение AI для обработки входящих заявок и поддержки клиентов: анализ процесса, проектирование сценария, интеграция и запуск в production.",
   provider: {
     "@type": "Person",
     name: "Александр Трищенков",
     url: siteUrl,
   },
-  areaServed: "Worldwide",
-  serviceType: ["AI Automation", "LLM Integration", "Process Automation", "Bot Development"],
-  offers: {
-    "@type": "AggregateOffer",
-    priceCurrency: "USD",
-    availability: "https://schema.org/InStock",
-  },
+  serviceType: ["AI Automation", "Lead Qualification", "Customer Support Automation"],
 };
 
 export default function RootLayout({

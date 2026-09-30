@@ -4,17 +4,17 @@ import { Badge } from "@/components/ui/badge";
 import { Send, Github, Mail, MapPin } from "lucide-react";
 
 const navLinks = [
-  { label: "Обо мне", href: "#about" },
-  { label: "Процесс", href: "#process" },
-  { label: "Навыки", href: "#skills" },
   { label: "Кейсы", href: "#projects" },
+  { label: "Как внедряю", href: "#process" },
+  { label: "Подход", href: "#about" },
   { label: "Опыт", href: "#experience" },
+  { label: "Стек", href: "#skills" },
   { label: "Контакты", href: "#contact" },
 ];
 
 const socialLinks = [
   { icon: Send, label: "Telegram", href: "https://t.me/a_trshncv" },
-  { icon: Github, label: "GitHub", href: "https://github.com/atrshncv-design" },
+  { icon: Github, label: "GitHub", href: "https://github.com/atrshncv-ai" },
   { icon: Mail, label: "Email", href: "mailto:alexander.trishencov@gmail.com" },
 ];
 
@@ -36,16 +36,15 @@ export function Footer() {
               </a>
               <div>
                 <div className="font-semibold">Александр Трищенков</div>
-                <div className="text-xs text-muted-foreground">AI Automation Specialist</div>
+                <div className="text-xs text-muted-foreground">AI-внедрение для бизнеса</div>
               </div>
             </div>
             <p className="text-sm text-muted-foreground">
-              Помогаю бизнесу автоматизировать процессы с помощью LLM, API и no-code. 
-              n8n, Make, RAG-системы, интеграции.
+              Разбираю процесс, проектирую AI-сценарий, интегрирую его в работу компании и запускаю в production.
             </p>
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <MapPin className="h-4 w-4" />
-              <span>Ижевск, Россия (удалённо)</span>
+              <span>Ижевск · удалённо</span>
             </div>
           </div>
 
@@ -86,7 +85,7 @@ export function Footer() {
               })}
             </div>
             <div className="pt-4">
-              <div className="text-xs text-muted-foreground mb-2">Технологии:</div>
+              <div className="text-xs text-muted-foreground mb-2">В работе:</div>
               <div className="flex flex-wrap gap-1">
                 {["n8n", "OpenAI", "Claude", "React", "TypeScript"].map((tech) => (
                   <Badge key={tech} variant="secondary" className="text-xs">
@@ -104,9 +103,7 @@ export function Footer() {
             © {currentYear} Александр Трищенков. Все права защищены.
           </p>
           <p className="text-sm text-muted-foreground">
-            Built with{" "}
-            <span className="text-primary font-medium">AI-first подход</span>
-            {" "}• Next.js • Tailwind
+            Разбор процесса • Проектирование • Production-внедрение
           </p>
         </div>
       </div>

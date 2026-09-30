@@ -3,362 +3,390 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { 
-  ExternalLink, 
-  Bot, 
-  ArrowRight, 
-  CheckCircle2, 
-  Wrench, 
-  TrendingUp, 
+import {
   AlertCircle,
-  Workflow,
-  MessageSquare,
-  Video,
-  Target,
+  ArrowRight,
+  Bot,
   Brain,
+  CheckCircle2,
   Database,
-  Search
+  ExternalLink,
+  MessageSquare,
+  Search,
+  Target,
+  Video,
+  Workflow,
+  type LucideIcon,
 } from "lucide-react";
 import { publicAssetPath } from "@/lib/public-path";
 
-// Featured AI Cases - главные кейсы
-const featuredProjects = [
+type WorkflowStep = {
+  icon: LucideIcon;
+  label: string;
+  detail: string;
+};
+
+type FeaturedProject = {
+  id: string;
+  title: string;
+  subtitle: string;
+  image?: string;
+  isPrimary?: boolean;
+  completedProject?: boolean;
+  problem: string;
+  solution: string;
+  role: string;
+  result: string;
+  workflow: WorkflowStep[];
+  architecture?: string[];
+  tags: string[];
+  links: { demo?: string; telegram?: string };
+};
+
+const featuredProjects: FeaturedProject[] = [
   {
-    title: "BTC Sarria — Агентная AI-система для крипто-обменника",
-    subtitle: "Автономная мультиагентная система на базе локальной LLM. Автоматизация 80% рутинных процессов",
-    image: "/projects/btc-sarria.png",
-    context: {
-      problem: "Ручная обработка клиентских запросов, парсинг данных с криптобирж и поиск информации занимали до 80% времени операторов. Масштабирование невозможно без найма. Конфиденциальность данных требовала локального решения — облачные API исключены.",
-      solution: "Разработал автономную агентную систему на базе локальной LLM (Llama/Mistral). Система парсит данные с 10+ источников, анализирует Excel/CSV отчёты, автономно ищет информацию в интернете через браузерного агента и ведёт диалоги с клиентами 24/7.",
-      architecture: ["Local LLM (Llama/Mistral)", "LangChain/LangGraph", "Playwright (browser agent)", "RAG + pgvector", "Python/FastAPI", "PostgreSQL", "OpenClaw"],
-    },
+    id: "lead-processing-case",
+    title: "Lead Processing Pipeline — ART RECORD",
+    subtitle: "AI-квалификация входящих лидов, запись на консультацию и follow-up",
+    isPrimary: true,
+    completedProject: true,
+    problem:
+      "Входящую заявку важно не просто принять: нужно понять запрос, квалифицировать лида и довести его до следующего шага. Без общего сценария часть этого пути остаётся на ручной работе менеджера.",
+    solution:
+      "AI-чат проводит первичный диалог и квалифицирует обращение; pipeline помогает записать лида на консультацию и продолжает follow-up после первого контакта.",
+    role:
+      "Самостоятельно спроектировал и внедрил pipeline: от разбора процесса до запуска в production.",
+    result:
+      "Квалификация, запись и follow-up идут в одной логике — менеджеру не нужно вручную запускать каждый следующий шаг.",
     workflow: [
-      { icon: Database, label: "Парсинг", desc: "10+ источников" },
-      { icon: Brain, label: "Local LLM", desc: "Конфиденциально" },
-      { icon: Search, label: "RAG", desc: "База знаний" },
-      { icon: Bot, label: "Чат-бот", desc: "24/7 поддержка" },
+      { icon: MessageSquare, label: "Обращение", detail: "Первый контакт" },
+      { icon: Bot, label: "AI-чат", detail: "Уточнение запроса" },
+      { icon: Target, label: "Квалификация", detail: "Подготовка лида" },
+      { icon: Workflow, label: "Запись", detail: "Следующий шаг" },
+      { icon: ArrowRight, label: "Follow-up", detail: "Продолжение диалога" },
     ],
-    metrics: [
-      { value: "80%", label: "автоматизация запросов" },
-      { value: "<2 сек", label: "среднее время ответа" },
-      { value: "1000+", label: "диалогов обработано" },
+    tags: ["AI-квалификация", "Обработка лидов", "Автоматизация продаж"],
+    links: {
+      demo: "https://ai-record.ru/",
+    },
+  },
+  {
+    id: "btc-sarria-case",
+    title: "BTC Sarria — локальная AI-система для криптообменника",
+    subtitle: "Обработка обращений и данных в закрытом AI-контуре",
+    image: "/projects/btc-sarria.png",
+    problem:
+      "Операторам нужно было работать с обращениями, биржевыми данными и таблицами. Для конфиденциальных данных облачные LLM не подходили.",
+    solution:
+      "Локальная агентная система на базе Llama/Mistral объединяет поиск по базе знаний, разбор Excel/CSV, браузерный поиск и диалоги с клиентами.",
+    role:
+      "Спроектировал и разработал агентную систему с локальной моделью, RAG и браузерным агентом.",
+    result:
+      "Обращения, документы и поиск сведений сведены в единый рабочий контур; обработка чувствительных данных остаётся локальной.",
+    workflow: [
+      { icon: Database, label: "Источники", detail: "Данные и таблицы" },
+      { icon: Brain, label: "Local LLM", detail: "Локальная обработка" },
+      { icon: Search, label: "RAG и поиск", detail: "Ответы по контексту" },
+      { icon: Bot, label: "Диалог", detail: "Ответ клиенту" },
     ],
-    whatLearned: "Локальная LLM — правильный выбор для конфиденциальных данных, но требует тщательного мониторинга latency и памяти. В v2 — интеграция с внутренней CRM и предиктивная аналитика транзакций.",
-    tags: ["Local LLM", "LangChain", "RAG", "Python", "Playwright", "PostgreSQL", "AI Agents"],
+    architecture: ["Llama / Mistral", "LangChain", "RAG", "Python", "PostgreSQL"],
+    tags: ["Локальные LLM", "RAG", "AI-агенты"],
     links: {
       demo: "https://gbtcfinance.com/ru/bitcoin-atm-store/gbtc-sarria/",
     },
   },
   {
-    title: "AI Music Generator — АРТ-РЕКОРД",
-    subtitle: "End-to-end автоматизация производства персонализированных песен",
-    image: "/projects/ai-record.png",
-    context: {
-      problem: "Ручное производство персонализированных песен занимало 20-30 минут менеджера на каждый заказ. Масштабирование невозможно без увеличения штата. Высокий риск человеческих ошибок при обработке заказов.",
-      solution: "Построил полностью автоматизированный pipeline: Telegram-бот принимает заказ → GPT генерирует текст → SUNO создаёт трек → постобработка → отправка клиенту. Участие человека: 0 минут на рутинные заказы.",
-      architecture: ["n8n (orchestration)", "OpenAI GPT-4 (lyrics)", "SUNO API (music generation)", "Telegram Bot API", "FFmpeg (post-processing)"],
-    },
+    id: "content-factory-case",
+    title: "Content Factory — AI video pipeline",
+    subtitle: "Автоматизация подготовки видео от брифа до готового файла",
+    image: "/projects/content-factory.png",
+    completedProject: true,
+    problem:
+      "Для выпуска видео нужно последовательно собрать бриф, подготовить сценарий, создать ролик, выполнить постобработку и передать файл.",
+    solution:
+      "Собрал производственный маршрут: Google Sheets с брифами → Claude со сценарием → HeyGen с AI-аватаром → обработка и загрузка в облако.",
+    role:
+      "Автоматизировал связку сервисов и добавил обработку сбоев внешнего API и уведомления.",
+    result:
+      "Этапы от брифа до готового видео собраны в единый маршрут; ошибки внешнего API обрабатываются отдельно.",
     workflow: [
-      { icon: MessageSquare, label: "Telegram Bot", desc: "Приём заказа" },
-      { icon: Workflow, label: "n8n", desc: "Оркестрация" },
-      { icon: Target, label: "GPT-4", desc: "Генерация текста" },
-      { icon: Video, label: "SUNO", desc: "Создание трека" },
+      { icon: MessageSquare, label: "Бриф", detail: "Google Sheets" },
+      { icon: Brain, label: "Сценарий", detail: "Claude" },
+      { icon: Video, label: "Видео", detail: "HeyGen" },
+      { icon: Workflow, label: "Постобработка", detail: "Автоматический маршрут" },
     ],
-    metrics: [
-      { value: "1000+", label: "треков сгенерировано" },
-      { value: "0 мин", label: "участие менеджера" },
-      { value: "30-60 сек", label: "время генерации" },
+    architecture: ["n8n", "Claude API", "HeyGen API", "Webhooks"],
+    tags: ["AI-видео", "Автоматизация контента", "Production"],
+    links: {
+      demo: "https://ai-record.ru/",
+    },
+  },
+  {
+    id: "ai-music-case",
+    title: "AI Music Generator — ART RECORD",
+    subtitle: "Автоматизированный маршрут заказа персональной песни",
+    image: "/projects/ai-record.png",
+    completedProject: true,
+    problem:
+      "Каждый персональный заказ проходит несколько разных операций: собрать пожелания клиента, подготовить текст, создать и обработать трек, затем доставить его заказчику.",
+    solution:
+      "Telegram-бот принимает заказ, GPT готовит текст, SUNO создаёт трек, после чего система выполняет постобработку и отправляет результат клиенту.",
+    role:
+      "Спроектировал и собрал pipeline, который связывает приём заказа, генерацию и доставку результата.",
+    result:
+      "Заказ проходит единый маршрут от сообщения клиента до готового трека; основные производственные шаги не нужно запускать вручную по отдельности.",
+    workflow: [
+      { icon: MessageSquare, label: "Заказ", detail: "Telegram-бот" },
+      { icon: Workflow, label: "Оркестрация", detail: "n8n" },
+      { icon: Target, label: "Текст", detail: "GPT" },
+      { icon: Video, label: "Трек", detail: "SUNO и обработка" },
     ],
-    whatLearned: "В v2 добавлю систему рекомендаций на основе предпочтений пользователя и интеграцию с платежными системами для полностью автономного бизнеса.",
-    tags: ["n8n", "OpenAI", "SUNO", "Telegram Bot", "Automation"],
+    architecture: ["n8n", "OpenAI", "SUNO API", "Telegram Bot API", "FFmpeg"],
+    tags: ["AI-аудио", "Telegram-бот", "Автоматизация заказа"],
     links: {
       demo: "https://ai-record.ru/",
       telegram: "https://t.me/art_record_24_songs_bot",
     },
   },
-  {
-    title: "Content Factory — AI Video Pipeline",
-    subtitle: "Автоматизация видео-продакшна: от 4 часов до 10 минут",
-    image: "/projects/content-factory.png",
-    context: {
-      problem: "Производство одного видео занимало 4 часа: брифинг, написание сценария, съёмка, монтаж, постпродакшн. Команда из 3 человек справлялась с 2 видео в день. Высокие затраты на персонал и оборудование.",
-      solution: "End-to-end автоматизация: Google Sheets с брифами → Claude пишет сценарий → HeyGen генерирует видео с AI-аватаром → автоматический монтаж → загрузка в облако. Команда: 1 человек для контроля качества.",
-      architecture: ["n8n", "Claude API", "HeyGen API", "Google Sheets", "Cloud Storage", "Webhooks", "Error Handling"],
-    },
-    workflow: [
-      { icon: MessageSquare, label: "Google Sheets", desc: "Брифы" },
-      { icon: Target, label: "Claude", desc: "Сценарий" },
-      { icon: Video, label: "HeyGen", desc: "AI-аватар" },
-      { icon: Workflow, label: "n8n", desc: "Автоматизация" },
-    ],
-    metrics: [
-      { value: "-96%", label: "сокращение времени" },
-      { value: "10 мин", label: "на одно видео" },
-      { value: "3→1", label: "команда сокращена" },
-    ],
-    whatLearned: "Критически важно предусмотреть fallback на случай недоступности HeyGen API. Добавил очередь с ретраями, экспоненциальным backoff и уведомления о сбоях в Telegram.",
-    tags: ["n8n", "HeyGen", "Claude", "Video Automation", "Workflow"],
-    links: {
-      demo: "https://ai-record.ru/",
-    },
-  },
 ];
 
-// Other Projects - остальные проекты
 const otherProjects = [
   {
-    title: "VK Video — Арт-объект «Смотрим в одной стороне»",
-    description: "Разработал и оптимизировал промпт для AI-генерации изображений на масштабном арт-объекте VK Video. 5000+ изображений с 100% успешных генераций, 50+ итераций оптимизации.",
+    title: "VK Video — арт-объект «Смотрим в одной стороне»",
+    description:
+      "Настроил и итеративно дорабатывал промпт для генерации изображений в проекте с единым визуальным замыслом.",
     image: "/projects/vk-video.png",
-    tags: ["Prompt Engineering", "Nanobanana", "A/B Testing", "AI Image Gen"],
-    metrics: ["100% успех", "5000+ изображений", "50+ итераций"],
+    tags: ["Генерация изображений", "Prompt design", "Итерации"],
     link: "https://smotrim-v-odny-storony.ru/",
   },
   {
-    title: "Naidoo AI — Обновление AI-ассистента",
-    description: "Провёл масштабное обновление AI-бота: расширил базу знаний (200+ записей), добавил новые сценарии, улучшил UX/UI. Результат: 15% рост конверсии, 99.9% uptime в продакшене.",
+    title: "Naidoo AI — развитие AI-ассистента",
+    description:
+      "Обновил базу знаний и пользовательские сценарии ассистента, доработал интерфейс и поведение ответов.",
     image: "/projects/naidoo-ai.png",
-    tags: ["Python", "LangGraph", "PostgreSQL", "Redis", "React", "Next.js"],
-    metrics: ["200+ записей", "15% конверсия", "99.9% uptime"],
+    tags: ["AI-ассистент", "База знаний", "UX/UI"],
     link: "https://naidoo.ai",
   },
   {
     title: "Трекер привычек",
-    description: "Минималистичное PWA для формирования привычек с прогресс-трекингом и статистикой",
+    description:
+      "PWA для ежедневного учёта привычек с прогрессом и статистикой, доступное с мобильного устройства.",
     image: "/projects/habits.png",
-    tags: ["React", "TypeScript", "PWA"],
-    metrics: ["2 недели dev", "100% Lighthouse"],
+    tags: ["PWA", "React", "TypeScript"],
     link: "https://trakerprivichek1.space.z.ai",
   },
   {
-    title: "Карта ПФО — Промышленность",
-    description: "Интерактивная аналитическая карта лёгкой промышленности Приволжского федерального округа",
+    title: "Карта ПФО — промышленность",
+    description:
+      "Интерактивная карта и аналитический интерфейс для изучения лёгкой промышленности регионов Приволжского округа.",
     image: "/projects/legprom.png",
-    tags: ["Data Viz", "React", "Maps"],
-    metrics: ["14 регионов", "50+ показателей"],
+    tags: ["Аналитика", "Карты", "Визуализация данных"],
     link: "https://legprompfov3.space.z.ai/",
   },
   {
     title: "Редактор гидроизогипс",
-    description: "Профессиональный GIS-инструмент для редактирования карт подземных вод",
+    description:
+      "GIS-инструмент для редактирования карт подземных вод и экспорта материалов в DXF и PDF.",
     image: "/projects/hydroeditor.png",
-    tags: ["GIS", "Canvas", "Geology"],
-    metrics: ["5x быстрее", "DXF/PDF экспорт"],
+    tags: ["GIS", "Canvas", "Геоданные"],
     link: "https://g13m52swxxh1-d1.space.z.ai/",
   },
   {
     title: "Карты и анализ стран",
-    description: "Серия интерактивных карт и аналитических дашбордов для США, Франции и других стран",
+    description:
+      "Серия интерактивных карт и аналитических панелей для исследования данных по разным странам.",
     image: "/projects/maps.png",
-    tags: ["Maps", "Dashboard", "Analytics"],
-    metrics: ["Мультиязычность", "Интерактив"],
+    tags: ["Карты", "Дашборды", "Аналитика"],
     link: "https://trishencovusa.space.z.ai/",
   },
 ];
 
+function WorkflowPanel({ steps }: { steps: WorkflowStep[] }) {
+  return (
+    <div className="overflow-x-auto rounded-xl border border-border/30 bg-muted/50 p-4">
+      <div className="mb-3 text-xs uppercase tracking-wider text-muted-foreground">
+        Как проходит процесс
+      </div>
+      <div className="flex min-w-max items-start gap-3">
+        {steps.map((step, index) => {
+          const Icon = step.icon;
+          return (
+            <div key={step.label} className="flex items-center gap-3">
+              <div className="w-28 text-center">
+                <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-full border border-primary/30 bg-primary/10">
+                  <Icon className="h-4 w-4 text-primary" />
+                </div>
+                <div className="text-xs font-medium">{step.label}</div>
+                <div className="mt-0.5 text-[10px] text-muted-foreground">{step.detail}</div>
+              </div>
+              {index < steps.length - 1 && (
+                <ArrowRight aria-hidden="true" className="h-4 w-4 shrink-0 text-muted-foreground/50" />
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 export function Projects() {
   return (
-    <section id="projects" className="py-20 bg-muted/30">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="text-center mb-12">
-          <Badge variant="outline" className="mb-4">
-            Кейсы
-          </Badge>
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-            Избранные <span className="gradient-text">AI-кейсы</span>
+    <section id="projects" className="bg-muted/30 py-20">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="mb-12 text-center">
+          <Badge variant="outline" className="mb-4">Кейсы</Badge>
+          <h2 className="mb-4 text-3xl font-bold sm:text-4xl">
+            AI-системы, <span className="gradient-text">встроенные в процесс</span>
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Каждый кейс — это реальная бизнес-проблема, решённая с помощью AI-автоматизации.
-            Конкретные метрики, архитектура, production-подход.
+          <p className="mx-auto max-w-2xl text-muted-foreground">
+            Сначала — задача и путь пользователя. Затем — решение, интеграции и то,
+            что было доведено до рабочего сценария.
           </p>
         </div>
 
-        {/* Featured Projects - stacked layout */}
         <div className="space-y-8">
-          {featuredProjects.map((project, index) => (
+          {featuredProjects.map((project) => (
             <Card
-              key={index}
-              className="border-border/50 bg-card/50 backdrop-blur-sm overflow-hidden case-card"
+              id={project.id}
+              key={project.id}
+              className="case-card overflow-hidden border-border/50 bg-card/50 backdrop-blur-sm"
             >
-              {/* Project Image - on top */}
               <div className="relative overflow-hidden">
-                <div className="aspect-video bg-muted">
-                  <img
-                    src={publicAssetPath(project.image)}
-                    alt={project.title}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="absolute top-4 left-4">
-                  <Badge className="bg-primary text-primary-foreground">Главный кейс</Badge>
-                </div>
+                {project.image ? (
+                  <div className="aspect-video bg-muted">
+                    <img
+                      src={publicAssetPath(project.image)}
+                      alt={project.title}
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                ) : (
+                  <div className="bg-gradient-to-br from-primary/15 via-card to-accent/10 p-6 sm:p-10">
+                    <div className="mb-2 text-sm font-medium text-primary">Завершённый проект · ART RECORD</div>
+                    <div className="mb-7 max-w-2xl text-2xl font-semibold sm:text-3xl">
+                      От первого обращения — к следующему действию
+                    </div>
+                    <WorkflowPanel steps={project.workflow} />
+                  </div>
+                )}
+                {project.isPrimary && (
+                  <div className="absolute right-4 top-4">
+                    <Badge className="bg-primary text-primary-foreground">Ключевой кейс</Badge>
+                  </div>
+                )}
               </div>
 
-              {/* Content - below image */}
-              <div className="flex flex-col">
-                <CardHeader className="pb-2">
+              <CardHeader className="pb-2">
+                <div className="flex flex-wrap items-start justify-between gap-2">
                   <div>
-                    <CardTitle className="text-xl mb-1">{project.title}</CardTitle>
-                    <p className="text-sm text-primary font-medium">{project.subtitle}</p>
+                    <CardTitle className="mb-1 text-xl">{project.title}</CardTitle>
+                    <p className="text-sm font-medium text-primary">{project.subtitle}</p>
                   </div>
-                </CardHeader>
+                  {project.completedProject && (
+                    <Badge variant="outline" className="border-border/60">Завершённый проект</Badge>
+                  )}
+                </div>
+              </CardHeader>
 
-                <CardContent className="flex-1 flex flex-col">
-                  {/* Workflow Visual */}
-                  <div className="mb-4 p-4 rounded-xl bg-muted/50 border border-border/30">
-                    <div className="text-xs text-muted-foreground mb-3 uppercase tracking-wider">Pipeline</div>
-                    <div className="flex items-center justify-center overflow-x-auto gap-2">
-                      {project.workflow.map((step, i) => {
-                        const Icon = step.icon;
-                        return (
-                          <div key={i} className="flex items-center gap-2">
-                            <div className="flex flex-col items-center text-center min-w-[60px]">
-                              <div className="w-10 h-10 rounded-full bg-primary/10 border border-primary/30 flex items-center justify-center mb-1">
-                                <Icon className="h-4 w-4 text-primary" />
-                              </div>
-                              <div className="text-xs font-medium">{step.label}</div>
-                              <div className="text-[10px] text-muted-foreground">{step.desc}</div>
-                            </div>
-                            {i < project.workflow.length - 1 && (
-                              <ArrowRight className="h-4 w-4 text-muted-foreground/30 flex-shrink-0" />
-                            )}
-                          </div>
-                        );
-                      })}
+              <CardContent>
+                {!project.isPrimary && <WorkflowPanel steps={project.workflow} />}
+
+                <div className="mt-5 grid gap-4 md:grid-cols-2">
+                  <div>
+                    <div className="mb-1 flex items-center gap-2">
+                      <AlertCircle className="h-4 w-4 text-amber-400" />
+                      <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Контекст</span>
                     </div>
+                    <p className="pl-6 text-sm leading-relaxed text-muted-foreground">{project.problem}</p>
                   </div>
-
-                  {/* Metrics */}
-                  <div className="flex flex-wrap justify-center gap-4 mb-4 p-3 rounded-lg bg-primary/5 border border-primary/20">
-                    {project.metrics.map((metric, i) => (
-                      <div key={i} className="text-center flex-1 min-w-[80px]">
-                        <div className="text-lg font-bold text-primary">{metric.value}</div>
-                        <div className="text-xs text-muted-foreground">{metric.label}</div>
-                      </div>
-                    ))}
+                  <div>
+                    <div className="mb-1 flex items-center gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-green-400" />
+                      <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Что внедрено</span>
+                    </div>
+                    <p className="pl-6 text-sm leading-relaxed text-muted-foreground">{project.solution}</p>
                   </div>
-
-                  {/* Context */}
-                  <div className="space-y-3 mb-4 flex-1">
-                    <div>
-                      <div className="flex items-center gap-2 mb-1">
-                        <AlertCircle className="h-4 w-4 text-red-400" />
-                        <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Проблема</span>
-                      </div>
-                      <p className="text-sm text-muted-foreground pl-6">{project.context.problem}</p>
+                  <div>
+                    <div className="mb-1 flex items-center gap-2">
+                      <Workflow className="h-4 w-4 text-primary" />
+                      <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Моя роль</span>
                     </div>
-
-                    <div>
-                      <div className="flex items-center gap-2 mb-1">
-                        <CheckCircle2 className="h-4 w-4 text-green-400" />
-                        <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Решение</span>
-                      </div>
-                      <p className="text-sm text-muted-foreground pl-6">{project.context.solution}</p>
-                    </div>
-
-                    <div>
-                      <div className="flex items-center gap-2 mb-1">
-                        <Wrench className="h-4 w-4 text-blue-400" />
-                        <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Стек</span>
-                      </div>
-                      <div className="flex flex-wrap gap-1.5 pl-6">
-                        {project.context.architecture.map((tech) => (
-                          <Badge key={tech} variant="outline" className="text-xs border-border/50">
-                            {tech}
-                          </Badge>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div>
-                      <div className="flex items-center gap-2 mb-1">
-                        <TrendingUp className="h-4 w-4 text-purple-400" />
-                        <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">V2 улучшения</span>
-                      </div>
-                      <p className="text-sm text-muted-foreground pl-6 italic">{project.whatLearned}</p>
-                    </div>
+                    <p className="pl-6 text-sm leading-relaxed text-muted-foreground">{project.role}</p>
                   </div>
+                  <div>
+                    <div className="mb-1 flex items-center gap-2">
+                      <Target className="h-4 w-4 text-purple-400" />
+                      <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Результат</span>
+                    </div>
+                    <p className="pl-6 text-sm leading-relaxed text-muted-foreground">{project.result}</p>
+                  </div>
+                </div>
 
-                  {/* Tags & Links */}
-                  <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-border/50 mt-auto">
-                    <div className="flex flex-wrap gap-2">
-                      {project.tags.map((tag) => (
-                        <Badge key={tag} variant="secondary" className="text-xs">
-                          {tag}
+                {project.architecture && (
+                  <div className="mt-5 border-t border-border/50 pt-4">
+                    <div className="mb-2 text-xs font-medium uppercase tracking-wider text-muted-foreground">Инструменты в проекте</div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {project.architecture.map((technology) => (
+                        <Badge key={technology} variant="outline" className="border-border/50 text-xs">
+                          {technology}
                         </Badge>
                       ))}
                     </div>
-                    <div className="flex flex-wrap gap-2">
-                      {project.links.demo && (
-                        <Button size="sm" asChild className="bg-primary hover:bg-primary/90 text-primary-foreground">
-                          <a href={project.links.demo} target="_blank" rel="noopener noreferrer">
-                            <ExternalLink className="h-4 w-4 mr-1" />
-                            Demo
-                          </a>
-                        </Button>
-                      )}
-                      {project.links.telegram && (
-                        <Button size="sm" variant="outline" asChild>
-                          <a href={project.links.telegram} target="_blank" rel="noopener noreferrer">
-                            <Bot className="h-4 w-4 mr-1" />
-                            Try Bot
-                          </a>
-                        </Button>
-                      )}
-                    </div>
                   </div>
-                </CardContent>
-              </div>
+                )}
+
+                <div className="mt-5 flex flex-wrap items-center justify-between gap-4 border-t border-border/50 pt-4">
+                  <div className="flex flex-wrap gap-2">
+                    {project.tags.map((tag) => <Badge key={tag} variant="secondary" className="text-xs">{tag}</Badge>)}
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {project.links.demo && (
+                      <Button size="sm" asChild>
+                        <a href={project.links.demo} target="_blank" rel="noopener noreferrer">
+                          <ExternalLink className="mr-1 h-4 w-4" /> Открыть проект
+                        </a>
+                      </Button>
+                    )}
+                    {project.links.telegram && (
+                      <Button size="sm" variant="outline" asChild>
+                        <a href={project.links.telegram} target="_blank" rel="noopener noreferrer">
+                          <Bot className="mr-1 h-4 w-4" /> Открыть Telegram-бота
+                        </a>
+                      </Button>
+                    )}
+                  </div>
+                </div>
+              </CardContent>
             </Card>
           ))}
         </div>
 
-        {/* Other Projects */}
         <div className="mt-16">
-          <div className="text-center mb-8">
-            <h3 className="text-2xl font-bold mb-2">Другие проекты</h3>
-            <p className="text-muted-foreground">
-              Веб-приложения, дашборды и инструменты для различных отраслей
-            </p>
+          <div className="mb-8 text-center">
+            <h3 className="mb-2 text-2xl font-bold">Другие проекты</h3>
+            <p className="text-muted-foreground">Продукты и инструменты в других предметных областях</p>
           </div>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            {otherProjects.map((project, index) => (
-              <Card
-                key={index}
-                className="border-border/50 bg-card/50 backdrop-blur-sm overflow-hidden group hover:shadow-lg transition-all"
-              >
-                <div className="aspect-video bg-muted overflow-hidden">
+          <div className="grid gap-6 md:grid-cols-2">
+            {otherProjects.map((project) => (
+              <Card key={project.title} className="group overflow-hidden border-border/50 bg-card/50 transition-shadow hover:shadow-lg">
+                <div className="aspect-video overflow-hidden bg-muted">
                   <img
                     src={publicAssetPath(project.image)}
                     alt={project.title}
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                   />
                 </div>
                 <CardContent className="pt-4">
-                  <h4 className="font-semibold mb-1">{project.title}</h4>
-                  <p className="text-sm text-muted-foreground mb-3">{project.description}</p>
-                  
-                  <div className="flex flex-wrap gap-2 mb-3">
-                    {project.metrics.map((metric, i) => (
-                      <Badge key={i} variant="outline" className="text-xs border-primary/30 text-primary">
-                        {metric}
-                      </Badge>
-                    ))}
-                  </div>
-
+                  <h4 className="mb-1 font-semibold">{project.title}</h4>
+                  <p className="mb-3 text-sm leading-relaxed text-muted-foreground">{project.description}</p>
                   <div className="flex flex-wrap items-center justify-between gap-3">
                     <div className="flex flex-wrap gap-1.5">
-                      {project.tags.map((tag) => (
-                        <Badge key={tag} variant="secondary" className="text-xs">
-                          {tag}
-                        </Badge>
-                      ))}
+                      {project.tags.map((tag) => <Badge key={tag} variant="secondary" className="text-xs">{tag}</Badge>)}
                     </div>
                     <Button size="sm" variant="ghost" asChild>
                       <a href={project.link} target="_blank" rel="noopener noreferrer">
-                        <ExternalLink className="h-4 w-4 mr-1" />
-                        Demo
+                        Открыть проект <ExternalLink className="ml-1 h-4 w-4" />
                       </a>
                     </Button>
                   </div>
@@ -368,12 +396,10 @@ export function Projects() {
           </div>
         </div>
 
-        {/* View All */}
-        <div className="text-center mt-12">
+        <div className="mt-12 text-center">
           <Button variant="outline" size="lg" asChild>
-            <a href="https://github.com/atrshncv-design" target="_blank" rel="noopener noreferrer">
-              Все проекты на GitHub
-              <ArrowRight className="h-4 w-4 ml-2" />
+            <a href="https://github.com/atrshncv-ai" target="_blank" rel="noopener noreferrer">
+              Все проекты на GitHub <ArrowRight className="ml-2 h-4 w-4" />
             </a>
           </Button>
         </div>
