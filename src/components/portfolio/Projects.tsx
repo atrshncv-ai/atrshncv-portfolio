@@ -155,7 +155,7 @@ const otherProjects = [
     title: "VK Video — арт-объект «Смотрим в одной стороне»",
     description:
       "Настроил и итеративно дорабатывал промпт для генерации изображений в проекте с единым визуальным замыслом.",
-    image: "/projects/vk-video.png",
+    image: "/projects/vk-video-case.png",
     tags: ["Генерация изображений", "Prompt design", "Итерации"],
     link: "https://smotrim-v-odny-storony.ru/",
   },
@@ -163,7 +163,7 @@ const otherProjects = [
     title: "Naidoo AI — развитие AI-ассистента",
     description:
       "Обновил базу знаний и пользовательские сценарии ассистента, доработал интерфейс и поведение ответов.",
-    image: "/projects/naidoo-ai.png",
+    image: "/projects/naidoo-ai-case.png",
     tags: ["AI-ассистент", "База знаний", "UX/UI"],
     link: "https://naidoo.ai",
   },
@@ -370,11 +370,11 @@ export function Projects() {
           <div className="grid gap-6 md:grid-cols-2">
             {otherProjects.map((project) => (
               <Card key={project.title} className="group overflow-hidden border-border/50 bg-card/50 transition-shadow hover:shadow-lg">
-                <div className={`aspect-video overflow-hidden ${project.image === "/projects/vk-video.png" ? "bg-black" : "bg-muted"}`}>
+                <div className={`aspect-video overflow-hidden ${project.image === "/projects/vk-video-case.png" ? "bg-black" : "bg-muted"}`}>
                   <img
                     src={publicAssetPath(project.image)}
                     alt={project.title}
-                    className={`h-full w-full ${project.image === "/projects/vk-video.png" ? "object-contain" : "object-cover transition-transform duration-300 group-hover:scale-105"}`}
+                    className={`h-full w-full ${project.image === "/projects/vk-video-case.png" ? "object-contain" : "object-cover transition-transform duration-300 group-hover:scale-105"}`}
                   />
                 </div>
                 <CardContent className="pt-4">
