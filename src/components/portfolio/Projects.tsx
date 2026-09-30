@@ -31,6 +31,8 @@ type FeaturedProject = {
   title: string;
   subtitle: string;
   image?: string;
+  imageAlt?: string;
+  illustrative?: boolean;
   isPrimary?: boolean;
   completedProject?: boolean;
   problem: string;
@@ -48,6 +50,9 @@ const featuredProjects: FeaturedProject[] = [
     id: "lead-processing-case",
     title: "Lead Processing Pipeline — ART RECORD",
     subtitle: "AI-квалификация входящих лидов, запись на консультацию и follow-up",
+    image: "/projects/lead-processing-illustration.png",
+    imageAlt: "Схема обработки обращения: AI-чат, квалификация, запись и follow-up",
+    illustrative: true,
     isPrimary: true,
     completedProject: true,
     problem:
@@ -74,7 +79,9 @@ const featuredProjects: FeaturedProject[] = [
     id: "btc-sarria-case",
     title: "BTC Sarria — локальная AI-система для криптообменника",
     subtitle: "Обработка обращений и данных в закрытом AI-контуре",
-    image: "/projects/btc-sarria.png",
+    image: "/projects/btc-sarria-illustration.png",
+    imageAlt: "Схема локального AI-контура для обработки документов и подготовки ответа",
+    illustrative: true,
     problem:
       "Операторам нужно было работать с обращениями, биржевыми данными и таблицами. Для конфиденциальных данных облачные LLM не подходили.",
     solution:
@@ -99,7 +106,9 @@ const featuredProjects: FeaturedProject[] = [
     id: "content-factory-case",
     title: "Content Factory — AI video pipeline",
     subtitle: "Автоматизация подготовки видео от брифа до готового файла",
-    image: "/projects/content-factory.png",
+    image: "/projects/content-factory-illustration.png",
+    imageAlt: "Схема производства видео от брифа до готового файла",
+    illustrative: true,
     completedProject: true,
     problem:
       "Для выпуска видео нужно последовательно собрать бриф, подготовить сценарий, создать ролик, выполнить постобработку и передать файл.",
@@ -254,12 +263,19 @@ export function Projects() {
             >
               <div className="relative overflow-hidden">
                 {project.image ? (
-                  <div className="aspect-video bg-muted">
+                  <div className="relative aspect-video bg-muted">
                     <img
                       src={publicAssetPath(project.image)}
-                      alt={project.title}
+                      alt={project.imageAlt ?? project.title}
                       className="h-full w-full object-cover"
+                      loading="lazy"
+                      decoding="async"
                     />
+                    {project.illustrative && (
+                      <Badge variant="secondary" className="absolute left-3 top-3 border border-white/10 bg-background/80 text-xs backdrop-blur-sm">
+                        Иллюстративная схема
+                      </Badge>
+                    )}
                   </div>
                 ) : (
                   <div className="bg-gradient-to-br from-primary/15 via-card to-accent/10 p-6 sm:p-10">
@@ -375,6 +391,8 @@ export function Projects() {
                     src={publicAssetPath(project.image)}
                     alt={project.title}
                     className={`h-full w-full ${project.image === "/projects/vk-video-case.png" ? "object-contain" : "object-cover transition-transform duration-300 group-hover:scale-105"}`}
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
                 <CardContent className="pt-4">
