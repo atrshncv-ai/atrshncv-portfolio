@@ -127,3 +127,8 @@ npm run build      # Статическая сборка сайта в out/
 ## Лицензия
 
 Лицензионного файла в репозитории нет; все права защищены.
+
+## License / Лицензия
+
+Released under the MIT License. See [LICENSE](LICENSE).
+Проект распространяется по лицензии MIT. См. [LICENSE](LICENSE).
